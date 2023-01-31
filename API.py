@@ -21,7 +21,7 @@ app.config["SECRET_KEY"] = "tootiefrootiebigbootie42069$$$"
 # Route for AI generated tweet and image generation
 @app.route('/', methods=["GET", "POST"])
 def index():
-  test = {0: 'yoyo'}
+  test = {'ai_output': 'It worked! #blessed #frankiewillbeproud :)'}
   data = json.dumps(test)
   print(type(data))
   return data
