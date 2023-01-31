@@ -9,9 +9,10 @@ from folderread import *
 from imagereadlightdark import *
 from facebook import *
 from instagram import *
+import json
 
 # Web Server Library
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
 from forms import CommentForm
 
 app = Flask(__name__)
@@ -20,9 +21,10 @@ app.config["SECRET_KEY"] = "tootiefrootiebigbootie42069$$$"
 # Route for AI generated tweet and image generation
 @app.route('/', methods=["GET", "POST"])
 def index():
-  yo = 'yo'
-
-  return yo
+  test = {0: 'yoyo'}
+  data = json.dumps(test)
+  print(type(data))
+  return data
   
 # Run app on server (must be at end of code)
 if __name__ == '__main__':
