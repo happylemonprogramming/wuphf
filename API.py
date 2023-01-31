@@ -10,6 +10,7 @@ from imagereadlightdark import *
 from facebook import *
 from instagram import *
 import json
+import random
 
 # Web Server Library
 from flask import Flask, render_template, jsonify
@@ -21,7 +22,8 @@ app.config["SECRET_KEY"] = "tootiefrootiebigbootie42069$$$"
 # Route for AI generated tweet and image generation
 @app.route('/', methods=["GET", "POST"])
 def index():
-  test = {'ai_output': 'It worked! #blessed #frankiewillbeproud :)'}
+  randomness = str(random.randint(1, 100))
+  test = {'ai_output': 'It worked! #blessed #frankiewillbeproud :)', 'random': randomness}
   data = json.dumps(test)
   print(type(data))
   return data
