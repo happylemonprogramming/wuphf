@@ -47,7 +47,7 @@ def post():
   tags = json_data['tags']
 
   response = poststatus(tonality,influencer,tags)
-  dictionary = {"api_output": response[0][3:], 'random': response[1]}
+  dictionary = {"api_output": response[0], 'random': response[1]}
   api_response = json.dumps(dictionary)
   return api_response
 
