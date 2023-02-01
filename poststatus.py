@@ -1,8 +1,9 @@
-#OpenAI prompt generator
+# OpenAI prompt generator
 import openai
+import os
 
-# Need to make an environmental variable
-openai.api_key_path = '/Users/clayt/Documents/Programming/APIs/OpenAI API/AI.txt'
+# API Key
+openai.api_key = os.environ["openaiapikey"]
 
 def poststatus(tonality,influencer,tags):
     response = openai.Completion.create(
