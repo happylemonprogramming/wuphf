@@ -1,3 +1,4 @@
+# need to make private!
 secret = 'f7cabaab119d7bd8dcafb3bec28c5cc3'
 app_id = '554211022979973'
 access_token = '554211022979973|SWyobgqnf8wkaK7CW4kbeKQGaHc'

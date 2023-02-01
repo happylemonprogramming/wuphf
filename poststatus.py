@@ -1,12 +1,14 @@
 #OpenAI prompt generator
 import openai
 
+# Need to make an environmental variable
 openai.api_key_path = '/Users/clayt/Documents/Programming/APIs/OpenAI API/AI.txt'
 
-def poststatus(user_prompt):
+def poststatus(tonality,influencer,tags):
     response = openai.Completion.create(
         model="text-davinci-003",
-        prompt='Using the tags ' + user_prompt + ', create a post in tweet format: ',
+        prompt=f'Using the tags: {tags}, create a {tonality} post in tweet format in the voice of {influencer}: ',
+        # prompt='Using the tags ' + tags + ', create a post in tweet format: ',
         # prompt='Take the following tags and put them into a tweet format: ' + user_prompt, # cuts off tweet
         # prompt='Using the tags ' + user_prompt + ', write a joke in tweet format: ', # terrible jokes
         # prompt='Using the tags ' + user_prompt + ', write a joke in the voice of Kevin Hart in tweet format: ', # hashtags Kevin Hart

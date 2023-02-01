@@ -2,6 +2,7 @@
 import tweepy
 
 # Replace these values with your own Twitter API credentials
+# Need to make private!
 consumer_key = "hbZzwAJE94vjuVpvEURtKfGXR"
 consumer_secret = "lowCf0fsfKPOKwU9vtzDxwOMwsIxLd2SWiQYsa6ZzzQE3msB0Q"
 access_token = "1373830285607899136-pVXqgGJSIVdeu5rb4G3x6QyTDaDHrd"
