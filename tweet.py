@@ -1,5 +1,6 @@
 # Use the media_upload method to upload the image to Twitter
 import tweepy
+import requests
 
 # Replace these values with your own Twitter API credentials
 # Need to make private!
@@ -21,10 +22,18 @@ def tweet_video(status,media):
 
 # Function to have text completion AI create a status and image based on prompt
 def tweet(status, media):
-    # tweet with image
-    api.update_status_with_media(status, media)
+    # tweet with image if local file
+    # api.update_status_with_media(status, media)
 
-    return None
+    url = media
+    response = requests.get(url)
+
+    # tweet image and status
+    with open("image.png", "wb") as f:
+        f.write(response.content)
+    api.update_status_with_media(status, 'image.png')
+    message = "Tweeted Successfully!"
+    return message
 
 # Function to get 'Home' timeline
 def timeline():

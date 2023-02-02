@@ -31,14 +31,14 @@ app.config["SECRET_KEY"] = "tootiefrootiebigbootie42069$$$"
 #   return 'JSON data: {}'.format(json_data)
   
 
-# Route for AI generated tweet and image generation
+# Route for AI generated text
 @app.route('/', methods=["POST"])
-def post():
+def caption():
   #Example JSON
     # JSON Body = {"name": "lemon", "tonality": "spicy", "influencer": "vanilla ice",
     # "imgurl":"aws.lemonissosmart.com/img", "tags": "pickle bananas chimpanzees"}
 
-  
+  # Variable loading for JSON
   json_data = request.get_json()
   name = json_data['name']
   tonality = json_data['tonality']
@@ -46,11 +46,31 @@ def post():
   imgurl = json_data['imgurl']
   tags = json_data['tags']
 
+  # AI text generation
   response = poststatus(tonality,influencer,tags)
+  # Transform to dictionary format
   dictionary = {"api_output": response[0], 'random': response[1]}
+  # Transform to JSON
   api_response = json.dumps(dictionary)
   return api_response
 
+
+# Route for AI generated text
+@app.route('/post', methods=["POST"])
+def post():
+  #Example JSON
+    # JSON Body = {"name": "lemon", "caption": "it works! #yay #moneymaker", "imgurl":"aws.lemonissosmart.com/img"}
+
+  # Variable loading for JSON
+  json_data = request.get_json()
+  name = json_data['name']
+  caption = json_data['caption']
+  imgurl = json_data['imgurl']
+
+  # Tweet submission
+  submission = tweet(caption, imgurl)
+
+  return submission
 
 # Run app on server (must be at end of code)
 if __name__ == '__main__':
