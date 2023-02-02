@@ -69,8 +69,9 @@ def post():
 
   # Tweet submission
   submission = tweet(caption, imgurl)
+  api_response = json.dumps(submission)
 
-  return submission
+  return api_response
 
 # Run app on server (must be at end of code)
 if __name__ == '__main__':
