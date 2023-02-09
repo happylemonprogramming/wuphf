@@ -32,7 +32,7 @@ def tweet(status, media):
     with open("image.png", "wb") as f:
         f.write(response.content)
     api.update_status_with_media(status, 'image.png')
-    message = "Tweeted Successfully!"
+    message = "Success!"
     return message
 
 # Function to get 'Home' timeline

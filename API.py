@@ -5,7 +5,7 @@ import datetime
 # Other Python files and functions
 from tweet import *
 from caption import *
-from trash.folderread import *
+# from trash.folderread import *
 from imagereadlightdark import *
 from facebookgraphapi import *
 # from instagram import *
@@ -71,8 +71,8 @@ def post():
   Twitter = tweet(caption, imgurl)
   # Facebook submission
   Facebook = facebook_post(caption, imgurl)
-
-  api_response = json.dumps(Twitter, Facebook)
+  output = {'Twitter': Twitter, 'Facebook': Facebook}
+  api_response = json.dumps(output)
 
   return api_response
 
