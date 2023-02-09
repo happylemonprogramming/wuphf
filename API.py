@@ -33,7 +33,7 @@ app.config["SECRET_KEY"] = "tootiefrootiebigbootie42069$$$"
 
 # Route for AI generated text
 @app.route('/', methods=["POST"])
-def caption():
+def status():
   #Example JSON
     # JSON Body = {"name": "lemon", "tonality": "spicy", "influencer": "vanilla ice",
     # "imgurl":"aws.lemonissosmart.com/img", "tags": "pickle bananas chimpanzees"}

@@ -31,7 +31,7 @@ def facebook_post(caption, media):
     # Post Return
     if response.status_code == 200:
         # success
-        return print(response.json())
+        return response.json()
     else:
         # failure
-        return print("Request failed with status code:", response.status_code, response.json())
+        return "Request failed with status code:", response.status_code, response.json()
