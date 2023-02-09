@@ -1,6 +1,6 @@
 import os
 from tweet import tweet, tweet_video
-from poststatus import *
+from caption import *
 from instagram import instagram_post
 from facebook import facebook_post
 import time
@@ -14,7 +14,7 @@ def folderread(folder, times):
     cost = 0
 
     for filename in filenames:
-        response = poststatus(filename[0:-4])
+        response = caption(filename[0:-4])
         # print(response)
 
         # If video upload via special video function, else normal function

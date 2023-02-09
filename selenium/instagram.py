@@ -2,8 +2,8 @@
 email = 'claytonlemons@live.com'
 password = '21$Milkshake'
 
-prompt = 'I like dinosaurs'
-path = r"C:\Users\clayt\Pictures\AI Images\T-Rex.png"
+prompt = 'Is it gif or gif?'
+path = r"C:\Users\clayt\Documents\Programming\banana.gif"
 
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
@@ -35,10 +35,12 @@ def instagram_post(prompt,path):
     time.sleep(4)
     # # Maybe add if statement for if notifications or log in info are present?
     # Save Login Info Pop-Up
-    wd.find_element_by_xpath('/html/body/div[2]/div/div/div/div[1]/div/div/div/div[1]/section/main/div/div/div/div/button').click()
+    # /html/body/div[2]/div/div/div/div[1]/div/div/div/div[1]/section/main/div/div/div/div/button #old0
+    wd.find_element_by_xpath('/html/body/div[2]/div/div/div/div[1]/div/div/div/div[1]/div[1]/div[2]/section/main/div/div/div/div/button').click()
     # Notifications Pop-Up
     wd.find_element_by_xpath('/html/body/div[2]/div/div/div/div[2]/div/div/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/button[2]').click()
     # Post
+    # /html/body/div[2]/div/div/div/div[1]/div/div/div/div[1]/div[1]/div[1]/div/div/div/div/div[2]/div[7]/div/div/a/div
     wd.find_element_by_xpath('/html/body/div[2]/div/div/div/div[1]/div/div/div/div[1]/section/nav/div[2]/div/div/div[3]/div/div[3]/div/button').click()
     time.sleep(3)
     # Post Image
@@ -57,3 +59,5 @@ def instagram_post(prompt,path):
     # Share
     wd.find_element_by_xpath('/html/body/div[2]/div/div/div/div[2]/div/div/div[1]/div/div[3]/div/div/div/div/div[2]/div/div/div/div[1]/div/div/div[3]/div/button').click()
     time.sleep(30)
+
+instagram_post(prompt,path)

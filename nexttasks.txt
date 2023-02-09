@@ -1,0 +1,9 @@
+build security by using environmental variables and configuration files
+environmental variables can be used to store the key to access the configuration file
+for example, the configuration file can have the username as the key and password as value
+this file can be encrypted with sha-256
+the private key for decryption can be an environmental variable
+
+this gives write permissions to the configuration file (new users)
+it also gives multiple tiers of security (environmental var, encrypt, configuration file)
+another layer would be for it to live on another server for key distribution

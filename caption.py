@@ -5,7 +5,7 @@ import os
 # API Key
 openai.api_key = os.environ["openaiapikey"]
 
-def poststatus(tonality,influencer,tags):
+def caption(tonality,influencer,tags):
     response = openai.Completion.create(
         model="text-davinci-003",
         prompt=f'Using the tags: {tags}, create a {tonality} post in tweet format in the voice of {influencer}: ',

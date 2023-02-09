@@ -4,11 +4,11 @@ import datetime
 
 # Other Python files and functions
 from tweet import *
-from poststatus import *
-from folderread import *
+from caption import *
+from trash.folderread import *
 from imagereadlightdark import *
-from facebook import *
-from instagram import *
+from facebookgraphapi import *
+# from instagram import *
 import json
 import random
 
@@ -47,7 +47,7 @@ def caption():
   tags = json_data['tags']
 
   # AI text generation
-  response = poststatus(tonality,influencer,tags)
+  response = caption(tonality,influencer,tags)
   # Transform to dictionary format
   dictionary = {"api_output": response[0], 'random': response[1]}
   # Transform to JSON
@@ -67,9 +67,12 @@ def post():
   caption = json_data['caption']
   imgurl = json_data['imgurl']
 
-  # Tweet submission
-  submission = tweet(caption, imgurl)
-  api_response = json.dumps(submission)
+  # Twitter submission
+  Twitter = tweet(caption, imgurl)
+  # Facebook submission
+  Facebook = facebook_post(caption, imgurl)
+
+  api_response = json.dumps(Twitter, Facebook)
 
   return api_response
 

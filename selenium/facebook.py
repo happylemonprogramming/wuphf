@@ -2,11 +2,13 @@
 secret = 'f7cabaab119d7bd8dcafb3bec28c5cc3'
 app_id = '554211022979973'
 access_token = '554211022979973|SWyobgqnf8wkaK7CW4kbeKQGaHc'
+token = 'SWyobgqnf8wkaK7CW4kbeKQGaHc'
 email = 'doesitwork@onmail.com'
 password = '21$Milkshake'
+client_token = '307a5fccc0e4409b1d9661a64640c2ad'
 
-# prompt = 'yo yo yo yo'
-# path = r"C:\Users\clayt\Pictures\AI Images\Lemon & T-Rex.png"
+prompt = 'yo yo yo yo'
+path = r"C:\Users\clayt\Pictures\AI Images\Lemon & T-Rex.png"
 
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
@@ -49,3 +51,8 @@ def facebook_post(prompt,path):
     # Publish
     time.sleep(4)
     wd.find_element_by_xpath('/html/body/div[1]/div/div[1]/div/div[4]/div/div/div[1]/div/div[2]/div/div/div/form/div/div[1]/div/div/div/div[3]/div[2]/div').click()
+
+facebook_post(prompt,path)
+
+
+# "id": "109784668695709",
