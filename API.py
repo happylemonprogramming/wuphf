@@ -1,16 +1,18 @@
-# Build a twitter bot that posts an image and text based on user prompt input
+# Build an API for wuphf
+# Standard library imports
 import time
 import datetime
-
-# Other Python files and functions
-from tweet import *
-from caption import *
-# from trash.folderread import *
-from imagereadlightdark import *
-from facebookgraphapi import *
-# from instagram import *
 import json
 import random
+
+# Other Python files and functions
+from imagereadlightdark import *
+
+# Money Maker
+from caption import *
+from tweet import *
+from facebookgraphapi import *
+from instagramgraphapi import *
 
 # Web Server Library
 from flask import Flask, render_template, jsonify, request
@@ -19,7 +21,7 @@ app = Flask(__name__)
 # Should be an environmental variable
 app.config["SECRET_KEY"] = "tootiefrootiebigbootie42069$$$"
 
-# # Route for AI generated tweet and image generation
+# # TEST GET REQUEST
 # @app.route('/', methods=["GET", "POST"])
 # def index():
 #   randomness = str(random.randint(1, 100))
@@ -71,7 +73,9 @@ def post():
   Twitter = tweet(caption, imgurl)
   # Facebook submission
   Facebook = facebook_post(caption, imgurl)
-  output = {'Twitter': Twitter, 'Facebook': Facebook}
+  # Instagram submission
+  Instagram = instagram_post(caption, imgurl)
+  output = {'Twitter': Twitter, 'Facebook': Facebook, 'Instagram': Instagram}
   api_response = json.dumps(output)
 
   return api_response
