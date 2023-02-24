@@ -45,6 +45,6 @@ def get_access_token(redirect_original, code):
         "fb_exchange_token": temp_access_token}
     # GET request response
     long_response = requests.get(key_url, params=id_data)
-    long_key = long_response.json()['access_token']
+    long_key = long_response.json()
     
     return long_key
