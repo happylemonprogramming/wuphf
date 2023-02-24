@@ -1,13 +1,25 @@
 # Use the media_upload method to upload the image to Twitter
 import tweepy
 import requests
+from datetime import datetime
+import os
 
-# Replace these values with your own Twitter API credentials
-# Need to make private!
-consumer_key = "hbZzwAJE94vjuVpvEURtKfGXR"
-consumer_secret = "lowCf0fsfKPOKwU9vtzDxwOMwsIxLd2SWiQYsa6ZzzQE3msB0Q"
-access_token = "1373830285607899136-pVXqgGJSIVdeu5rb4G3x6QyTDaDHrd"
-access_token_secret = "5jtSSfgTYq3bx7bhaXMHaLfeWXPqBozlJYwN6xzUeaPsb"
+# Resources
+# Need to visit website below to implement logging in with Twitter:
+# https://developer.twitter.com/en/docs/authentication/oauth-1-0a/obtaining-user-access-tokens#:~:text=Twitter%20allows%20you%20to%20obtain,having%20them%20authorize%20your%20application.
+# User needs to have "Allow this app to be used to Sign in with Twitter?” option is enabled.
+# https://developer.twitter.com/en/docs/authentication/guides/log-in-with-twitter
+# https://developer.twitter.com/en/docs/authentication/api-reference/request_token
+
+# App specific
+consumer_key = os.environ.get('twitter_consumer_key')
+consumer_secret = os.environ.get('twitter_consumer_secret')
+# User specific
+access_token = os.environ.get('twitter_access_token')
+access_token_secret = os.environ.get('twitter_access_token_secret')
+# OAuth 2.0 Client Tokens
+client_id = os.environ.get('twitter_client_id')
+client_secret = os.environ.get('twitter_client_secret')
 
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
@@ -15,6 +27,10 @@ auth.set_access_token(access_token, access_token_secret)
 api = tweepy.API(auth)
 
 def tweet_video(status,media):
+    # Common tweepy API code insert
+    auth.set_access_token(access_token, access_token_secret)
+    api = tweepy.API(auth)
+
     upload = api.media_upload(media) #Didn't work, but didn't error
     api.update_status(status=status, media_ids=[upload.media_id_string])
     # api.chunked_upload(media) #Throws an error
@@ -22,6 +38,9 @@ def tweet_video(status,media):
 
 # Function to have text completion AI create a status and image based on prompt
 def tweet(status, media):
+    # Common tweepy API code insert
+    auth.set_access_token(access_token, access_token_secret)
+    api = tweepy.API(auth)
     # tweet with image if local file
     # api.update_status_with_media(status, media)
 
@@ -37,6 +56,9 @@ def tweet(status, media):
 
 # Function to get 'Home' timeline
 def timeline():
+    # Common tweepy API code insert
+    auth.set_access_token(access_token, access_token_secret)
+    api = tweepy.API(auth)
 
     my_timeline = api.home_timeline()
 
@@ -45,7 +67,10 @@ def timeline():
 
 # # Function to get the latest tweet
 # def latest_tweet():
-
+    # # Common tweepy API code insert
+    # auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    # auth.set_access_token(access_token, access_token_secret)
+    # api = tweepy.API(auth)
 #     my_page = api.user_timeline(screen_name="lemonknowsall", count=1)
 
 #     # Iterate over the tweets in the timeline
@@ -62,6 +87,10 @@ def timeline():
 
 # Function to get embed html code for tweet url
 def embed_tweet(tweet_url):
+    # Common tweepy API code insert
+    auth.set_access_token(access_token, access_token_secret)
+    api = tweepy.API(auth)
+
     embed = api.get_oembed(tweet_url) 
     # Split the string into a list of words
     words = embed['html'].split()
@@ -87,3 +116,31 @@ def embed_tweet(tweet_url):
 
     return embed['html'], hashtags
 
+# Function to have text completion AI create a status and image based on prompt
+def schedule_tweet(status, media): #Need to debug further and might be able to do solely on bubble.io
+    # Common tweepy API code insert
+    auth.set_access_token(access_token, access_token_secret)
+    api = tweepy.API(auth)
+    
+    # tweet with image if local file
+    # api.update_status_with_media(status, media)
+    
+    date='2023-02-20'
+    time='18:30:00'
+    year = int(date[0:4])
+    month = int(date[5:7])
+    day = int(date[8:10])
+    hour = int(time[0:2])
+    minute = int(time[3:5])
+    second = int(time[6:8])
+    scheduled_time = datetime(year, month, day, hour, minute, second)
+    url = media
+    response = requests.get(url)
+
+    # tweet image and status
+    with open("image.png", "wb") as f:
+        f.write(response.content)
+
+    api.update_status_with_media(status, 'image.png',scheduled_at=scheduled_time)
+    message = "Success!"
+    return message

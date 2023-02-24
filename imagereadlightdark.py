@@ -2,8 +2,8 @@ import imageio
 import numpy as np
 import os
 
-# path = r"C:\Users\clayt\Pictures\AI Images/" # For testing purposes only
-# path = r"C:\Users\clayt\Documents\Programming\AI Twitter Bot/"
+# path = r"C:\Users\<user>\Pictures\AI Images/" # For testing purposes only
+# path = r"C:\Users\<user>\Documents\Programming\AI Twitter Bot/"
 
 # Function to see if image is light or dark based on 0-255 mean grayscale of image in path
 def imagereadlightdark(path):

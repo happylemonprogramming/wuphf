@@ -5,34 +5,28 @@ import datetime
 import json
 import random
 
-# Other Python files and functions
-from imagereadlightdark import *
-
-# Money Maker
+# AI API
 from caption import *
+
+# Twitter API
 from tweet import *
+
+# META API
 from facebookgraphapi import *
 from instagramgraphapi import *
+from metakeygenerator import *
+
+# Other Python files and functions
+from imagereadlightdark import *
 
 # Web Server Library
 from flask import Flask, render_template, jsonify, request
 
 app = Flask(__name__)
 # Should be an environmental variable
-app.config["SECRET_KEY"] = "tootiefrootiebigbootie42069$$$"
+app.config["SECRET_KEY"] = os.environ.get('flasksecret')
 
-# # TEST GET REQUEST
-# @app.route('/', methods=["GET", "POST"])
-# def index():
-#   randomness = str(random.randint(1, 100))
-#   test = {'ai_output': 'It worked! #blessed #frankiewillbeproud :)', 'random': randomness}
-#   data = json.dumps(test)
-#   print(type(data))
-#   json_data = request.get_json()
-#   print(json_data)
-#   return 'JSON data: {}'.format(json_data)
-  
-
+# __________________________________________________________________________________________________________________________________________________________
 # Route for AI generated text
 @app.route('/', methods=["POST"])
 def status():
@@ -55,9 +49,9 @@ def status():
   # Transform to JSON
   api_response = json.dumps(dictionary)
   return api_response
+# __________________________________________________________________________________________________________________________________________________________
 
-
-# Route for AI generated text
+# Route for mass social media posting
 @app.route('/post', methods=["POST"])
 def post():
   #Example JSON
@@ -79,7 +73,26 @@ def post():
   api_response = json.dumps(output)
 
   return api_response
+# __________________________________________________________________________________________________________________________________________________________
+
+  # Route for Meta Key Generator
+@app.route('/secret', methods=["POST"])
+def post():
+  #Example JSON
+    # JSON Body = {"code": "LKJalskjdfiojuiopFIOYuigasgfdjgfGjgjF", "redirecturl": "aws.lemonissosmart.com/img"}
+
+  # Variable loading for JSON
+  json_data = request.get_json()
+  code = json_data['code']
+  redirect_original = json_data['redirecturl']
+
+  # Meta Key Generator
+  long_key = get_access_token(redirect_original, code)
+  api_response = json.dumps(long_key)
+
+  return api_response
+# __________________________________________________________________________________________________________________________________________________________
 
 # Run app on server (must be at end of code)
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5500, debug=True, threaded=True) #Change host back to 0.0.0.0, if needed
+    app.run(host='0.0.0.0', port=5000, debug=True, threaded=True) # Change host back to 0.0.0.0, if needed or http(s)://127.0.0.1

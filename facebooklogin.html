@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v16.0&appId=554211022979973&autoLogAppEvents=1" nonce="31Gitboz"></script>
+  <div class="fb-login-button" data-width="" data-size="" data-button-type="" data-layout="" data-auto-logout-link="false" data-use-continue-as="false"></div>
+</body>
+
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '554211022979973',
+      cookie     : true,
+      xfbml      : true,
+      version    : '16.0'
+    });
+      
+    FB.AppEvents.logPageView();   
+      
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+
+
+   FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+    });
+
+
+    function checkLoginState() {
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  });
+  }
+
+  <fb:login-button 
+    config_id="{config_id}"
+    onlogin="checkLoginState();">
+  </fb:login-button>
+
+</script>
+</html>
+
+
+<!-- 
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v16.0&appId=554211022979973&autoLogAppEvents=1" nonce="31Gitboz"></script>
+
+<div class="fb-login-button" data-width="" data-size="" data-button-type="" data-layout="" data-auto-logout-link="false" data-use-continue-as="false"></div> -->
+
