@@ -77,7 +77,7 @@ def post():
 
   # Route for Meta Key Generator
 @app.route('/secret', methods=["POST"])
-def post():
+def secret():
   #Example JSON
     # JSON Body = {"code": "LKJalskjdfiojuiopFIOYuigasgfdjgfGjgjF", "redirecturl": "aws.lemonissosmart.com/img"}
 
