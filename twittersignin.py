@@ -58,12 +58,17 @@ encoded_signature = urllib.parse.quote(signature, safe='')
 url = "https://api.twitter.com/oauth/request_token?"
 url += f"oauth_callback={encoded_callback_url}"+"&"
 url += f"oauth_consumer_key={consumer_key}"+"&"
-url += "oauth_signature_method=HMAC-SHA1"+"&"
-url += "oauth_version=1.0"+"&"
-url += f"oauth_timestamp={timestamp}"+"&"
+# url += f"oauth_nonce=FdvlB1MZ2k9"+"&"
 url += f"oauth_nonce={nonce}"+"&"
+url += "oauth_signature_method=HMAC-SHA1"+"&"
+# url += f"oauth_timestamp=1677297899"+"&"
+url += f"oauth_timestamp={timestamp}"+"&"
+# url += f"oauth_signature=JznzGugn6DgZ65jXBW%2FDe%2FjV1ec%3D"
 url += f"oauth_signature={encoded_signature}"
+url += "oauth_version=1.0"+"&"
 
+
+print(url)
 response = requests.request("POST", url)
 
 print(response.text)

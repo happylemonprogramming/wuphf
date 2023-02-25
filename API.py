@@ -10,6 +10,7 @@ from caption import *
 
 # Twitter API
 from tweet import *
+from twittertemptoken import *
 
 # META API
 from facebookgraphapi import *
@@ -75,7 +76,7 @@ def post():
   return api_response
 # __________________________________________________________________________________________________________________________________________________________
 
-  # Route for Meta Key Generator
+# Route for Meta Key Generator
 @app.route('/secret', methods=["POST"])
 def secret():
   #Example JSON
@@ -92,6 +93,16 @@ def secret():
 
   return api_response
 # __________________________________________________________________________________________________________________________________________________________
+
+# Route for Twitter Token Generator
+@app.route('/twittertoken', methods=["GET"])
+def secret():
+  # Twitter Token Generator
+  temp_token = get_twitter_temp_token()
+  api_response = json.dumps(temp_token)
+
+  return api_response
+
 
 # Run app on server (must be at end of code)
 if __name__ == '__main__':
