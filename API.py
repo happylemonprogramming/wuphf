@@ -96,11 +96,11 @@ def secret():
 
 # Route for Twitter Token Generator
 @app.route('/twittertoken', methods=["GET"])
-def secret():
+def twittertoken():
   # Twitter Token Generator
   temp_token = get_twitter_temp_token()
-  api_response = json.dumps(temp_token)
-
+  dictionary = {"oauth_token": temp_token[0], 'oauth_token_secret': temp_token[1]}
+  api_response = json.dumps(dictionary)
   return api_response
 
 
