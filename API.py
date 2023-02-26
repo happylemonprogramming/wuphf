@@ -61,7 +61,8 @@ def post():
 
   # Variable loading for JSON
   json_data = request.get_json()
-  print("API JSON data: " + json_data)
+  print("API JSON data: ")
+  print(json_data)
   name = json_data['name']
   caption = json_data['caption']
   imgurl = json_data['imgurl']
