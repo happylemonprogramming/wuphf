@@ -16,7 +16,7 @@ def get_twitter_temp_token():
     # Using OAuth1Session
     oauth = OAuth1Session(client_key, client_secret=client_secret)
     fetch_response = oauth.fetch_request_token(request_token_url)
-
+    
     oauth_token = fetch_response['oauth_token']
     oauth_token_secret = fetch_response['oauth_token_secret']
     return oauth_token, oauth_token_secret

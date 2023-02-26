@@ -11,6 +11,7 @@ from caption import *
 # Twitter API
 from tweet import *
 from twittertemptoken import *
+from twitterpermanenttoken import *
 
 # META API
 from facebookgraphapi import *
@@ -103,6 +104,24 @@ def twittertoken():
   api_response = json.dumps(dictionary)
   return api_response
 
+# __________________________________________________________________________________________________________________________________________________________
+
+# Route for Twitter Key Generator
+@app.route('/secret', methods=["POST"])
+def secret():
+  #Example JSON
+    # JSON Body = {"oauth_token": "yabbadabb", "oauth_verifier": "doooooooooooo"}
+
+  # Variable loading for JSON
+  json_data = request.get_json()
+  oauth_token = json_data['oauth_token']
+  oauth_verifier = json_data['oauth_verifier']
+
+  # Meta Key Generator
+  twitter_key = get_twitter_permanent_token(oauth_token, oauth_verifier)
+  api_response = json.dumps(twitter_key)
+
+  return api_response
 
 # Run app on server (must be at end of code)
 if __name__ == '__main__':
