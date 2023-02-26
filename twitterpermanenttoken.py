@@ -1,6 +1,7 @@
-# Using OAuth1 auth helper
+# Standard library imports
 import requests
 import os
+import json
 
 # App specific
 client_key = os.environ.get('twitter_consumer_key')
@@ -40,4 +41,7 @@ def get_twitter_permanent_token(temp_oauth_token, temp_oauth_verifier):
         if key == "screen_name":
             screen_name = value
         
-    return oauth_token, oauth_token_secret, user_id, screen_name
+
+    dictionary = {"oauth_token": oauth_token, "oauth_token_secret": oauth_token_secret, "user_id": user_id, "screen_name": screen_name}
+    data = json.dumps(dictionary)
+    return data
