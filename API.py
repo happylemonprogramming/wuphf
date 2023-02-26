@@ -116,6 +116,9 @@ def twitterkey():
   json_data = request.get_json()
   oauth_token = json_data['oauth_token']
   oauth_verifier = json_data['oauth_verifier']
+  print(json_data)
+  print(oauth_token)
+  print(oauth_verifier)
 
   # Meta Key Generator
   twitter_key = get_twitter_permanent_token(oauth_token, oauth_verifier)
