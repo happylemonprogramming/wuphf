@@ -107,8 +107,8 @@ def twittertoken():
 # __________________________________________________________________________________________________________________________________________________________
 
 # Route for Twitter Key Generator
-@app.route('/secret', methods=["POST"])
-def secret():
+@app.route('/twitterkey', methods=["POST"])
+def twitterkey():
   #Example JSON
     # JSON Body = {"oauth_token": "yabbadabb", "oauth_verifier": "doooooooooooo"}
 
