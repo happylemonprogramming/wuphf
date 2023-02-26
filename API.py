@@ -64,13 +64,16 @@ def post():
   name = json_data['name']
   caption = json_data['caption']
   imgurl = json_data['imgurl']
+  meta_key = json_data['meta_key']
+  twitter_token = json_data['twitter_token']
+  twitter_secret = json_data['twitter_secret']
 
   # Twitter submission
-  Twitter = tweet(caption, imgurl)
+  Twitter = tweet(caption, imgurl, twitter_token, twitter_secret)
   # Facebook submission
-  Facebook = facebook_post(caption, imgurl)
+  Facebook = facebook_post(caption, imgurl, meta_key)
   # Instagram submission
-  Instagram = instagram_post(caption, imgurl)
+  Instagram = instagram_post(caption, imgurl, meta_key)
   output = {'Twitter': Twitter, 'Facebook': Facebook, 'Instagram': Instagram}
   api_response = json.dumps(output)
 

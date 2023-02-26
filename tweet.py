@@ -15,18 +15,18 @@ import os
 consumer_key = os.environ.get('twitter_consumer_key')
 consumer_secret = os.environ.get('twitter_consumer_secret')
 # User specific
-access_token = os.environ.get('twitter_access_token')
-access_token_secret = os.environ.get('twitter_access_token_secret')
+# access_token = os.environ.get('twitter_access_token')
+# access_token_secret = os.environ.get('twitter_access_token_secret')
 # OAuth 2.0 Client Tokens
 client_id = os.environ.get('twitter_client_id')
 client_secret = os.environ.get('twitter_client_secret')
 
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-auth.set_access_token(access_token, access_token_secret)
+# auth.set_access_token(access_token, access_token_secret)
 
-api = tweepy.API(auth)
+# api = tweepy.API(auth)
 
-def tweet_video(status,media):
+def tweet_video(status,media,access_token,access_token_secret):
     # Common tweepy API code insert
     auth.set_access_token(access_token, access_token_secret)
     api = tweepy.API(auth)
@@ -37,7 +37,7 @@ def tweet_video(status,media):
     return None
 
 # Function to have text completion AI create a status and image based on prompt
-def tweet(status, media):
+def tweet(status, media, access_token, access_token_secret):
     # Common tweepy API code insert
     auth.set_access_token(access_token, access_token_secret)
     api = tweepy.API(auth)
@@ -55,7 +55,7 @@ def tweet(status, media):
     return message
 
 # Function to get 'Home' timeline
-def timeline():
+def timeline(access_token,access_token_secret):
     # Common tweepy API code insert
     auth.set_access_token(access_token, access_token_secret)
     api = tweepy.API(auth)
@@ -86,7 +86,7 @@ def timeline():
 #     return my_page[0].text, my_page[0].user.screen_name, tweet_url
 
 # Function to get embed html code for tweet url
-def embed_tweet(tweet_url):
+def embed_tweet(tweet_url, access_token, access_token_secret):
     # Common tweepy API code insert
     auth.set_access_token(access_token, access_token_secret)
     api = tweepy.API(auth)
@@ -117,7 +117,7 @@ def embed_tweet(tweet_url):
     return embed['html'], hashtags
 
 # Function to have text completion AI create a status and image based on prompt
-def schedule_tweet(status, media): #Need to debug further and might be able to do solely on bubble.io
+def schedule_tweet(status, media, access_token, access_token_secret): #Need to debug further and might be able to do solely on bubble.io
     # Common tweepy API code insert
     auth.set_access_token(access_token, access_token_secret)
     api = tweepy.API(auth)

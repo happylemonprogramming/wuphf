@@ -8,10 +8,10 @@ import requests
 import os
 
 # Environment Variables for Facebook Credentials
-user_access_token = os.environ.get('meta_user_access_token')
+# user_access_token = os.environ.get('meta_user_access_token')
 
 # API Function to post to Instagram
-def instagram_post(caption, media):
+def instagram_post(caption, media, user_access_token):
     # # Get Pages ID
     id_url = "https://graph.facebook.com/me/accounts"
     id_data = {"access_token": user_access_token}

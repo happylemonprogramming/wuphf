@@ -6,9 +6,9 @@ import requests
 import os
 
 # Environment Variables for Facebook Credentials
-user_access_token = os.environ.get('meta_user_access_token')
+# user_access_token = os.environ.get('meta_user_access_token')
 
-def facebook_post(caption, media):
+def facebook_post(caption, media, user_access_token):
     # # Get Pages ID
     id_url = "https://graph.facebook.com/me/accounts"
     id_data = {"access_token": user_access_token}
