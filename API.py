@@ -120,9 +120,10 @@ def twitterkey():
   print(oauth_token)
   print(oauth_verifier)
 
-  # Meta Key Generator
+  # Twitter Key Generator
   twitter_key = get_twitter_permanent_token(oauth_token, oauth_verifier)
-  api_response = json.dumps(twitter_key)
+  dictionary = {"oauth_token": twitter_key[0], 'oauth_token_secret': twitter_key[1], 'user_id': twitter_key[2], 'screen_name': twitter_key[3]}
+  api_response = json.dumps(dictionary)
 
   return api_response
 
