@@ -44,6 +44,6 @@ def get_twitter_permanent_token(temp_oauth_token, temp_oauth_verifier):
             screen_name = value
         
 
-    dictionary = {"oauth_token": oauth_token, "oauth_token_secret": oauth_token_secret, "user_id": user_id, "screen_name": screen_name}
-    data = json.dumps(dictionary)
-    return data
+    # dictionary = {"oauth_token": oauth_token, "oauth_token_secret": oauth_token_secret, "user_id": user_id, "screen_name": screen_name}
+    # data = json.dumps(dictionary)
+    return oauth_token, oauth_token_secret, user_id, screen_name
