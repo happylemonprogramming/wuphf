@@ -15,21 +15,21 @@ def get_twitter_permanent_token(temp_oauth_token, temp_oauth_verifier):
 
     # Make the request
     response = requests.request("POST", url)
-    print(response.text)
+    print("Permanent Response: " + response.text)
 
     # Split the string based on the "&" character
     parts = response.text.split("&")
-    print(parts)
+    print("Permanent Parts: " + parts)
     # Loop through each part and split based on the "=" character
     for part in parts:
         key_value = part.split("=")
-        print(key_value)
+        print("Permanent Key Value: " + key_value)
         key = key_value[0]
         value = key_value[1]
         
         # If the key is "oauth_token", save the value
         if key == "oauth_token":
-            oauth_token = value
+           oauth_token = value
 
         # If the key is "oauth_token_secret", save the value
         if key == "oauth_token_secret":

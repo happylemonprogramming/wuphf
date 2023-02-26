@@ -61,12 +61,15 @@ def post():
 
   # Variable loading for JSON
   json_data = request.get_json()
+  print("API JSON data: " + json_data)
   name = json_data['name']
   caption = json_data['caption']
   imgurl = json_data['imgurl']
   meta_key = json_data['meta_key']
   twitter_token = json_data['twitter_token']
   twitter_secret = json_data['twitter_secret']
+  print("API Twitter Token: " + twitter_token)
+  print("API Twitter Secret: " + twitter_secret)
 
   # Twitter submission
   Twitter = tweet(caption, imgurl, twitter_token, twitter_secret)

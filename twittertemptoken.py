@@ -21,28 +21,10 @@ def get_twitter_temp_token():
     oauth_token_secret = fetch_response['oauth_token_secret']
     return oauth_token, oauth_token_secret
 
-# OAuth Token and Secret get passed to Bubble via API call
-# Then Bubble uses the token and secret to get the user's profile via Twitter link (GET request)
-
-# goto_browser_url = 'https://api.twitter.com/oauth/authorize'
-# params = {'oauth_token': oauth_token, 'oauth_token_secret': oauth_token_secret, 'oauth_callback_confirmed': 'True'}
-# r = requests.get(goto_browser_url, params=params)
-
-# print(r)
-
-# {
-#     "oauth_token": "Z6eEdO8MOmk394WozF5oKyuAv855l4Mlqo7hhlSLik",
-#     "oauth_token_secret": "Kd75W4OQfb2oJTV0vzGzeXftVAwgMnEK9MumzYcM"
-# }
-# resource_owner_key = fetch_response.get('oauth_token')
-# resource_owner_secret = fetch_response.get('oauth_token_secret')
-
-# # Using OAuth1 auth helper
-# oauth = OAuth1(client_key, client_secret=client_secret)
-# r = requests.post(url=request_token_url, auth=oauth)
-# r.content
-# "oauth_token=Z6eEdO8MOmk394WozF5oKyuAv855l4Mlqo7hhlSLik&oauth_token_secret=Kd75W4OQfb2oJTV0vzGzeXftVAwgMnEK9MumzYcM"
-# from urlparse import parse_qs
-# credentials = parse_qs(r.content)
-# resource_owner_key = credentials.get('oauth_token')[0]
-# resource_owner_secret = credentials.get('oauth_token_secret')[0]
+# var = get_twitter_temp_token()
+# print(var)
+# step2url = 'https://api.twitter.com/oauth/authorize?'
+# step2url += f"oauth_token={var[0]}&"
+# step2url += f"oauth_token_secret={var[1]}&"
+# step2url += f"oauth_callback_confirmed=True"
+# print(step2url)

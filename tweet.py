@@ -26,19 +26,11 @@ auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 
 # api = tweepy.API(auth)
 
-def tweet_video(status,media,access_token,access_token_secret):
-    # Common tweepy API code insert
-    auth.set_access_token(access_token, access_token_secret)
-    api = tweepy.API(auth)
-
-    upload = api.media_upload(media) #Didn't work, but didn't error
-    api.update_status(status=status, media_ids=[upload.media_id_string])
-    # api.chunked_upload(media) #Throws an error
-    return None
-
 # Function to have text completion AI create a status and image based on prompt
 def tweet(status, media, access_token, access_token_secret):
     # Common tweepy API code insert
+    print("Tweet Access Token: " + access_token)
+    print("Tweet Access Secret: " + access_token_secret)
     auth.set_access_token(access_token, access_token_secret)
     api = tweepy.API(auth)
     # tweet with image if local file
@@ -54,16 +46,26 @@ def tweet(status, media, access_token, access_token_secret):
     message = "Success!"
     return message
 
-# Function to get 'Home' timeline
-def timeline(access_token,access_token_secret):
-    # Common tweepy API code insert
-    auth.set_access_token(access_token, access_token_secret)
-    api = tweepy.API(auth)
+# def tweet_video(status,media,access_token,access_token_secret):
+#     # Common tweepy API code insert
+#     auth.set_access_token(access_token, access_token_secret)
+#     api = tweepy.API(auth)
 
-    my_timeline = api.home_timeline()
+#     upload = api.media_upload(media) #Didn't work, but didn't error
+#     api.update_status(status=status, media_ids=[upload.media_id_string])
+#     # api.chunked_upload(media) #Throws an error
+#     return None
 
-    # Return first timeline tweet, username and url
-    return my_timeline[0].text,my_timeline[0].user.screen_name, my_timeline[0].user.url
+# # Function to get 'Home' timeline
+# def timeline(access_token,access_token_secret):
+#     # Common tweepy API code insert
+#     auth.set_access_token(access_token, access_token_secret)
+#     api = tweepy.API(auth)
+
+#     my_timeline = api.home_timeline()
+
+#     # Return first timeline tweet, username and url
+#     return my_timeline[0].text,my_timeline[0].user.screen_name, my_timeline[0].user.url
 
 # # Function to get the latest tweet
 # def latest_tweet():
@@ -85,62 +87,62 @@ def timeline(access_token,access_token_secret):
 
 #     return my_page[0].text, my_page[0].user.screen_name, tweet_url
 
-# Function to get embed html code for tweet url
-def embed_tweet(tweet_url, access_token, access_token_secret):
-    # Common tweepy API code insert
-    auth.set_access_token(access_token, access_token_secret)
-    api = tweepy.API(auth)
+# # Function to get embed html code for tweet url
+# def embed_tweet(tweet_url, access_token, access_token_secret):
+#     # Common tweepy API code insert
+#     auth.set_access_token(access_token, access_token_secret)
+#     api = tweepy.API(auth)
 
-    embed = api.get_oembed(tweet_url) 
-    # Split the string into a list of words
-    words = embed['html'].split()
-    # Iterate over the list of words
-    links = []
-    for word in words:
-        # Check if the current word is not the word to keep
-        if "http" in word:
-            # Add word to list
-            links.append(word)
+#     embed = api.get_oembed(tweet_url) 
+#     # Split the string into a list of words
+#     words = embed['html'].split()
+#     # Iterate over the list of words
+#     links = []
+#     for word in words:
+#         # Check if the current word is not the word to keep
+#         if "http" in word:
+#             # Add word to list
+#             links.append(word)
 
-    # Links list may contain multiple several links, likely in the order below
-    # 1 and 2 http to ?, 3 is link to post, 4 is also link to post, 5 is widgets
-    # Remove last 3 since they are consistent
-    hashnoise = links[:-3] # 'noise' ecause it has lingering characters from split that aren't part of link
-    hashtags = []
-    i = 0
-    for tag in hashnoise:
-        start = hashnoise[i].find('http')
-        end = hashnoise[i].find('?')
-        hashtags.append(hashnoise[i][start:end])
-        i = i+1
+#     # Links list may contain multiple several links, likely in the order below
+#     # 1 and 2 http to ?, 3 is link to post, 4 is also link to post, 5 is widgets
+#     # Remove last 3 since they are consistent
+#     hashnoise = links[:-3] # 'noise' ecause it has lingering characters from split that aren't part of link
+#     hashtags = []
+#     i = 0
+#     for tag in hashnoise:
+#         start = hashnoise[i].find('http')
+#         end = hashnoise[i].find('?')
+#         hashtags.append(hashnoise[i][start:end])
+#         i = i+1
 
-    return embed['html'], hashtags
+#     return embed['html'], hashtags
 
-# Function to have text completion AI create a status and image based on prompt
-def schedule_tweet(status, media, access_token, access_token_secret): #Need to debug further and might be able to do solely on bubble.io
-    # Common tweepy API code insert
-    auth.set_access_token(access_token, access_token_secret)
-    api = tweepy.API(auth)
+# # Function to have text completion AI create a status and image based on prompt
+# def schedule_tweet(status, media, access_token, access_token_secret): #Need to debug further and might be able to do solely on bubble.io
+#     # Common tweepy API code insert
+#     auth.set_access_token(access_token, access_token_secret)
+#     api = tweepy.API(auth)
     
-    # tweet with image if local file
-    # api.update_status_with_media(status, media)
+#     # tweet with image if local file
+#     # api.update_status_with_media(status, media)
     
-    date='2023-02-20'
-    time='18:30:00'
-    year = int(date[0:4])
-    month = int(date[5:7])
-    day = int(date[8:10])
-    hour = int(time[0:2])
-    minute = int(time[3:5])
-    second = int(time[6:8])
-    scheduled_time = datetime(year, month, day, hour, minute, second)
-    url = media
-    response = requests.get(url)
+#     date='2023-02-20'
+#     time='18:30:00'
+#     year = int(date[0:4])
+#     month = int(date[5:7])
+#     day = int(date[8:10])
+#     hour = int(time[0:2])
+#     minute = int(time[3:5])
+#     second = int(time[6:8])
+#     scheduled_time = datetime(year, month, day, hour, minute, second)
+#     url = media
+#     response = requests.get(url)
 
-    # tweet image and status
-    with open("image.png", "wb") as f:
-        f.write(response.content)
+#     # tweet image and status
+#     with open("image.png", "wb") as f:
+#         f.write(response.content)
 
-    api.update_status_with_media(status, 'image.png',scheduled_at=scheduled_time)
-    message = "Success!"
-    return message
+#     api.update_status_with_media(status, 'image.png',scheduled_at=scheduled_time)
+#     message = "Success!"
+#     return message
