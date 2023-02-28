@@ -69,36 +69,39 @@ def post():
   json_data = request.get_json()
   print("API JSON data: ")
   print(json_data)
-  dictionary_data = json.loads(json_data)
-  name = dictionary_data['name']
-  caption = list(dictionary_data['caption'])
-  imgurl = list(dictionary_data['imgurl'])
-  meta_key = dictionary_data['meta_key']
-  twitter_token = dictionary_data['twitter_token']
-  twitter_secret = dictionary_data['twitter_secret']
-  print(caption)
-  print(type(caption))
-  print(imgurl)
-  print(type(imgurl))
-  name = json_data['name']
-  # caption = json_data['caption']
-  # imgurl = json_data['imgurl']
-  # meta_key = json_data['meta_key']
-  # twitter_token = json_data['twitter_token']
-  # twitter_secret = json_data['twitter_secret']
+  # dictionary_data = json.loads(json_data)
+  # name = dictionary_data['name']
+  # caption = list(dictionary_data['caption'])
+  # imgurl = list(dictionary_data['imgurl'])
+  # meta_key = dictionary_data['meta_key']
+  # twitter_token = dictionary_data['twitter_token']
+  # twitter_secret = dictionary_data['twitter_secret']
   # print(caption)
   # print(type(caption))
   # print(imgurl)
   # print(type(imgurl))
-  # print("API Twitter Token: " + twitter_token)
-  # print("API Twitter Secret: " + twitter_secret)
+  name = json_data['name']
+  captions = json_data['caption'][1:].split(', \n\n')
+  imgurls = json_data['imgurl'].split(', ')
+  meta_key = json_data['meta_key']
+  twitter_token = json_data['twitter_token']
+  twitter_secret = json_data['twitter_secret']
 
-  # Twitter submission
-  Twitter = tweet(caption, imgurl, twitter_token, twitter_secret)
-  # Facebook submission
-  Facebook = facebook_post(caption, imgurl, meta_key)
-  # Instagram submission
-  Instagram = instagram_post(caption, imgurl, meta_key)
+  print("API Twitter Token: " + twitter_token)
+  print("API Twitter Secret: " + twitter_secret)
+  i=0
+  
+  for caption in captions:
+    imgurl = imgurls[i]
+    # Twitter submission
+    Twitter = tweet(caption, imgurl, twitter_token, twitter_secret)
+    # Facebook submission
+    Facebook = facebook_post(caption, imgurl, meta_key)
+    # Instagram submission
+    Instagram = instagram_post(caption, imgurl, meta_key)
+    i+=1
+
+
   output = {'Twitter': Twitter, 'Facebook': Facebook, 'Instagram': Instagram}
   api_response = json.dumps(output)
 
