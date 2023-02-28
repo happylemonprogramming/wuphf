@@ -44,6 +44,8 @@ def status():
   imgurl = json_data['imgurl']
   tags = json_data['tags']
 
+  # TODO: should tags be a list?
+
   # AI text generation
   response = caption(tonality,influencer,tags)
   # Transform to dictionary format
@@ -62,32 +64,26 @@ def post():
     #               'name': 'Lemon', 
     #               'caption': "\n\nJust when I thought I've seen it all, my buddy calls me to come over and watch a dinosaur and lemon battle. This ain't no ordinary fight club! #DaveChappelle, \n\nI just got struck by lightning while making a lemonade... oh well, at least the drink will be extra strong this time! #LightningLemon #DaveChappelle", 
     #               'imgurl': '//s3.amazonaws.com/appforest_uf/f1675978942446x792425085319267600/Lemon%20%26%20T-Rex.png, //s3.amazonaws.com/appforest_uf/f1675978976428x846564285372801800/Lightning%20%26%20Lemon%202.png', 
-    #               'meta_key': 'EAAH4DU8nw4UBAHB6u6PtNoKkeUWOEz19BKVdZB7YJTlJG7c504VZCTuMe40gu51TbOIWJyFE9SZAwatdZBSzEZCLNFbrZBPTBIlOF9b6ZC9VS3J2Bd2LPy9kKtT3pAWvl8wuzPjhsK7N1WyEeZCLIHDlbPziG48d2DlZBXYKzL5lE8LLZCSqdJPm46', 
-    #               'twitter_token': '1373830285607899136-pVXqgGJSIVdeu5rb4G3x6QyTDaDHrd', 
-    #               'twitter_secret': '5jtSSfgTYq3bx7bhaXMHaLfeWXPqBozlJYwN6xzUeaPsb'}
+    #               'meta_key': 'abc123', 
+    #               'twitter_token': 'abc-123', 
+    #               'twitter_secret': 'abc123'}
+
   # Variable loading for JSON
   json_data = request.get_json()
   print("API JSON data: ")
   print(json_data)
-  # dictionary_data = json.loads(json_data)
-  # name = dictionary_data['name']
-  # caption = list(dictionary_data['caption'])
-  # imgurl = list(dictionary_data['imgurl'])
-  # meta_key = dictionary_data['meta_key']
-  # twitter_token = dictionary_data['twitter_token']
-  # twitter_secret = dictionary_data['twitter_secret']
-  # print(caption)
-  # print(type(caption))
-  # print(imgurl)
-  # print(type(imgurl))
+
   name = json_data['name']
   captions = json_data['caption'][1:].split(', \n\n')
   imgurls = json_data['imgurl'].split(', ')
   meta_key = json_data['meta_key']
   twitter_token = json_data['twitter_token']
   twitter_secret = json_data['twitter_secret']
-  print(len(captions))
   i=0
+  print(captions)
+  print(len(captions))
+  print(imgurls)
+  print(len(imgurls))
   for caption in captions:
     imgurl = "https:" + imgurls[i]
     # Twitter submission
@@ -97,7 +93,7 @@ def post():
     # Instagram submission
     Instagram = instagram_post(caption, imgurl, meta_key)
     i+=1
-    if i > len(captions):
+    if i >= len(captions):
       break
 
   output = {'Twitter': Twitter, 'Facebook': Facebook, 'Instagram': Instagram}

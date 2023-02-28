@@ -29,8 +29,6 @@ auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 # Function to have text completion AI create a status and image based on prompt
 def tweet(status, media, access_token, access_token_secret):
     # Common tweepy API code insert
-    print("Tweet Access Token: " + access_token)
-    print("Tweet Access Secret: " + access_token_secret)
     auth.set_access_token(access_token, access_token_secret)
     api = tweepy.API(auth)
     # tweet with image if local file
