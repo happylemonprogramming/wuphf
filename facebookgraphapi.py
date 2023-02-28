@@ -35,7 +35,7 @@ def facebook_post(caption, media, user_access_token):
     # Post Return
     if response.status_code == 200:
         # success
-        return response.json()
+        return "Success!"
     else:
         # failure
         return "Request failed with status code:", response.status_code, response.json()

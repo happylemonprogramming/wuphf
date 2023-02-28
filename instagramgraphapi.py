@@ -41,7 +41,7 @@ def instagram_post(caption, media, user_access_token):
         "creation_id": container_id
         }
     response = requests.post(post_url, params=post_data)
-    post_id = response.json()['id']
+    # post_id = response.json()['id'] # Getting KeyError: 'id'
 
     # Procedure for Reels and Carousels
     # https://developers.facebook.com/docs/instagram-api/guides/content-publishing
@@ -49,7 +49,7 @@ def instagram_post(caption, media, user_access_token):
     # Post Return
     if response.status_code == 200:
         # success
-        return post_id
+        return "Success!"
     else:
         # failure
         return "Request failed with status code:", response.status_code, response.json()

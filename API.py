@@ -93,6 +93,7 @@ def post():
     # Instagram submission
     Instagram = instagram_post(caption, imgurl, meta_key)
     i+=1
+    print('There are ' + str(len(captions)) + ' captions. You just finished caption #' + str(i) + '.')
     if i >= len(captions):
       break
 
