@@ -63,16 +63,27 @@ def post():
   json_data = request.get_json()
   print("API JSON data: ")
   print(json_data)
-  name = json_data['name']
-  caption = json_data['caption']
-  imgurl = json_data['imgurl']
-  meta_key = json_data['meta_key']
-  twitter_token = json_data['twitter_token']
-  twitter_secret = json_data['twitter_secret']
+  dictionary_data = json.loads(json_data)
+  name = dictionary_data['name']
+  caption = dictionary_data['caption']
+  imgurl = dictionary_data['imgurl']
+  meta_key = dictionary_data['meta_key']
+  twitter_token = dictionary_data['twitter_token']
+  twitter_secret = dictionary_data['twitter_secret']
   print(caption)
   print(type(caption))
   print(imgurl)
   print(type(imgurl))
+  name = json_data['name']
+  # caption = json_data['caption']
+  # imgurl = json_data['imgurl']
+  # meta_key = json_data['meta_key']
+  # twitter_token = json_data['twitter_token']
+  # twitter_secret = json_data['twitter_secret']
+  # print(caption)
+  # print(type(caption))
+  # print(imgurl)
+  # print(type(imgurl))
   # print("API Twitter Token: " + twitter_token)
   # print("API Twitter Secret: " + twitter_secret)
 
