@@ -86,11 +86,8 @@ def post():
   meta_key = json_data['meta_key']
   twitter_token = json_data['twitter_token']
   twitter_secret = json_data['twitter_secret']
-
-  print("API Twitter Token: " + twitter_token)
-  print("API Twitter Secret: " + twitter_secret)
+  print(len(captions))
   i=0
-
   for caption in captions:
     imgurl = "https:" + imgurls[i]
     # Twitter submission
@@ -100,7 +97,8 @@ def post():
     # Instagram submission
     Instagram = instagram_post(caption, imgurl, meta_key)
     i+=1
-
+    if i > len(captions):
+      break
 
   output = {'Twitter': Twitter, 'Facebook': Facebook, 'Instagram': Instagram}
   api_response = json.dumps(output)
