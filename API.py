@@ -69,8 +69,10 @@ def post():
   meta_key = json_data['meta_key']
   twitter_token = json_data['twitter_token']
   twitter_secret = json_data['twitter_secret']
-  print("API Twitter Token: " + twitter_token)
-  print("API Twitter Secret: " + twitter_secret)
+  print(caption)
+  print(imgurl)
+  # print("API Twitter Token: " + twitter_token)
+  # print("API Twitter Secret: " + twitter_secret)
 
   # Twitter submission
   Twitter = tweet(caption, imgurl, twitter_token, twitter_secret)
