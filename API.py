@@ -90,9 +90,9 @@ def post():
   print("API Twitter Token: " + twitter_token)
   print("API Twitter Secret: " + twitter_secret)
   i=0
-  
+
   for caption in captions:
-    imgurl = imgurls[i]
+    imgurl = "https:" + imgurls[i]
     # Twitter submission
     Twitter = tweet(caption, imgurl, twitter_token, twitter_secret)
     # Facebook submission
