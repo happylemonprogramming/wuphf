@@ -70,7 +70,9 @@ def post():
   twitter_token = json_data['twitter_token']
   twitter_secret = json_data['twitter_secret']
   print(caption)
+  print(type(caption))
   print(imgurl)
+  print(type(imgurl))
   # print("API Twitter Token: " + twitter_token)
   # print("API Twitter Secret: " + twitter_secret)
 
