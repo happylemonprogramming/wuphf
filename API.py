@@ -85,6 +85,7 @@ def post():
   print(len(captions))
   print(imgurls)
   print(len(imgurls))
+  time.sleep(30)
   for caption in captions:
     # imgurl = "https:" + imgurls[i]
     # # Twitter submission
