@@ -69,6 +69,7 @@ def post():
     #               'twitter_secret': 'abc123'}
 
   # Variable loading for JSON
+  print("NEW POST REQUEST HAS BEEN POSTED")
   json_data = request.get_json()
   print("API JSON data: ")
   print(json_data)
