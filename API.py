@@ -86,20 +86,21 @@ def post():
   print(imgurls)
   print(len(imgurls))
   for caption in captions:
-    imgurl = "https:" + imgurls[i]
-    # Twitter submission
-    Twitter = tweet(caption, imgurl, twitter_token, twitter_secret)
-    # Facebook submission
-    Facebook = facebook_post(caption, imgurl, meta_key)
-    # Instagram submission
-    Instagram = instagram_post(caption, imgurl, meta_key)
+    # imgurl = "https:" + imgurls[i]
+    # # Twitter submission
+    # Twitter = tweet(caption, imgurl, twitter_token, twitter_secret)
+    # # Facebook submission
+    # Facebook = facebook_post(caption, imgurl, meta_key)
+    # # Instagram submission
+    # Instagram = instagram_post(caption, imgurl, meta_key)
     i+=1
     print('There are ' + str(len(captions)) + ' captions. You just finished caption #' + str(i) + '.')
     if i >= len(captions):
       break
 
-  output = {'Twitter': Twitter, 'Facebook': Facebook, 'Instagram': Instagram}
-  api_response = json.dumps(output)
+  # output = {'Twitter': Twitter, 'Facebook': Facebook, 'Instagram': Instagram}
+  # api_response = json.dumps(output)
+  api_response = 'yo'
 
   return api_response
 # __________________________________________________________________________________________________________________________________________________________
