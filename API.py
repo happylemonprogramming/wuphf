@@ -42,12 +42,14 @@ def status():
   tonality = json_data['tonality']
   influencer = json_data['influencer']
   imgurl = json_data['imgurl']
-  print(imgurl)
-  print(type(imgurl))
+  imgurlList = imgurl.split(', ')
   tags = json_data['tags']
-  print(tags)
-  print(type(tags))
-  # TODO: should tags be a list?
+  tagsList = tags.split(', ')
+
+  print(imgurlList)
+  print(type(imgurlList))
+  print(tagsList)
+  print(type(tagsList))
 
   # AI text generation
   response = caption(tonality,influencer,tags)
@@ -74,8 +76,9 @@ def post():
   # Variable loading for JSON
   print("NEW POST REQUEST HAS BEEN POSTED")
   json_data = request.get_json()
-  print("API JSON data: ")
-  print(json_data)
+  print("THIS IS STILL A PROBLEM; IT WILL CONTINIOUSLY POST IF IT EXCEEDS HTTP TIMEOUT ON HEROKU")
+
+  # time.sleep(30)
 
   name = json_data['name']
   captions = json_data['caption'].split(', \n\n')
@@ -84,27 +87,26 @@ def post():
   twitter_token = json_data['twitter_token']
   twitter_secret = json_data['twitter_secret']
   i=0
-  print(captions)
-  print(len(captions))
-  print(imgurls)
-  print(len(imgurls))
-  time.sleep(30)
-  for caption in captions:
-    # imgurl = "https:" + imgurls[i]
-    # # Twitter submission
-    # Twitter = tweet(caption, imgurl, twitter_token, twitter_secret)
-    # # Facebook submission
-    # Facebook = facebook_post(caption, imgurl, meta_key)
-    # # Instagram submission
-    # Instagram = instagram_post(caption, imgurl, meta_key)
-    i+=1
-    print('There are ' + str(len(captions)) + ' captions. You just finished caption #' + str(i) + '.')
-    if i >= len(captions):
-      break
+  if len(captions) != len(imgurls):
+    shorterlist = min(len(captions), len(imgurls))
+    for item in shorterlist:
+      imgurl = "https:" + imgurls[i]
+      caption = captions[i]
+      # Twitter submission
+      Twitter = tweet(caption, imgurl, twitter_token, twitter_secret)
+      # Facebook submission
+      Facebook = facebook_post(caption, imgurl, meta_key)
+      # Instagram submission
+      Instagram = instagram_post(caption, imgurl, meta_key)
+      i+=1
+      print('There are ' + str(len(captions)) + ' captions. You just finished caption #' + str(i) + '.')
+      if i >= 3:
+        print('BREAK CODE TO STOP POSTING')
+        break
 
-  # output = {'Twitter': Twitter, 'Facebook': Facebook, 'Instagram': Instagram}
-  # api_response = json.dumps(output)
-  api_response = 'yo'
+  output = {'Twitter': Twitter, 'Facebook': Facebook, 'Instagram': Instagram}
+  api_response = json.dumps(output)
+  # api_response = 'yo'
 
   return api_response
 # __________________________________________________________________________________________________________________________________________________________
