@@ -83,7 +83,7 @@ def post():
   i=0
   if len(captions) != len(imgurls):
     shorterlist = min(len(captions), len(imgurls))
-    for item in shorterlist:
+    for item in range(shorterlist):
       imgurl = "https:" + imgurls[i]
       caption = captions[i]
       # Twitter submission
