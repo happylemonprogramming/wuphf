@@ -30,7 +30,7 @@ app.config["SECRET_KEY"] = os.environ.get('flasksecret')
 
 # __________________________________________________________________________________________________________________________________________________________
 # Route for AI generated text
-@app.route('/', methods=["POST"])
+@app.route('/tags2captions', methods=["POST"])
 def status():
   #Example JSON
     # JSON Body = {"name": "lemon", "tonality": "spicy", "influencer": "vanilla ice",
@@ -42,8 +42,11 @@ def status():
   tonality = json_data['tonality']
   influencer = json_data['influencer']
   imgurl = json_data['imgurl']
+  print(imgurl)
+  print(type(imgurl))
   tags = json_data['tags']
-
+  print(tags)
+  print(type(tags))
   # TODO: should tags be a list?
 
   # AI text generation
