@@ -42,15 +42,9 @@ def status():
   tonality = json_data['tonality']
   influencer = json_data['influencer']
   imgurl = json_data['imgurl']
-  imgurlList = imgurl.split(', ')
   tags = json_data['tags']
-  tagsList = tags.split(', ')
-
-  print(imgurlList)
-  print(type(imgurlList))
-  print(tagsList)
-  print(type(tagsList))
-
+  # NOTE: using a list of tags of images would slow down the HTTP return; better to have the API called several times
+  # NOTE: paradox exists that the more images that are uploaded, the more bubble work there is; but that's more reliable than running list in the API [worthwhile tradeoff]
   # AI text generation
   response = caption(tonality,influencer,tags)
   # Transform to dictionary format
@@ -100,7 +94,7 @@ def post():
       Instagram = instagram_post(caption, imgurl, meta_key)
       i+=1
       print('There are ' + str(len(captions)) + ' captions. You just finished caption #' + str(i) + '.')
-      if i >= 3:
+      if i >= 2:
         print('BREAK CODE TO STOP POSTING')
         break
 
