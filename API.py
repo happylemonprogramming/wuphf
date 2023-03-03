@@ -75,7 +75,7 @@ def post():
   print(json_data)
 
   name = json_data['name']
-  captions = json_data['caption'][1:].split(', \n\n')
+  captions = json_data['caption'].split(', \n\n')
   imgurls = json_data['imgurl'].split(', ')
   meta_key = json_data['meta_key']
   twitter_token = json_data['twitter_token']
