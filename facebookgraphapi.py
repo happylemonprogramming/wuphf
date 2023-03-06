@@ -25,11 +25,13 @@ def facebook_post(caption, media, user_access_token):
     # Identify File Type
     filetype = str(media[-3:])
     print(filetype)
+    media_url = 'https:'+media
+    print(media_url)
     # Image Post
     if filetype == 'jpg' or filetype == 'png' or filetype == 'gif':
         print("IMAGE POST")
         post_url = f"https://graph.facebook.com/{page_id}/photos"
-        post_data = {"message": caption, "url": "https:"+media, "access_token": page_access_token}
+        post_data = {"message": caption, "url": media_url, "access_token": page_access_token}
         response = requests.post(post_url, json=post_data)
         print(response.json())
 
@@ -48,7 +50,7 @@ def facebook_post(caption, media, user_access_token):
 
         # Upload Video
         upload_url = f'https://rupload.facebook.com/video-upload/v13.0/{video_id}'
-        upload_headers = {'Authorization': 'OAuth '+page_access_token, 'file_url': "https:"+media}
+        upload_headers = {'Authorization': 'OAuth '+page_access_token, 'file_url': media_url}
         response = requests.post(upload_url, headers=upload_headers)
         print("UPLOAD VIDEO: ", response.json())
         check = response.json()['success']
