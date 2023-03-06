@@ -68,10 +68,9 @@ def post():
     #               'twitter_secret': 'abc123'}
 
   # Variable loading for JSON
-  print("NEW POST REQUEST HAS BEEN POSTED")
+  print("NEW POST REQUEST HAS BEEN INITIATED")
   json_data = request.get_json()
-  print("THIS IS STILL A PROBLEM; IT WILL CONTINIOUSLY POST IF IT EXCEEDS HTTP TIMEOUT ON HEROKU")
-
+  # TODO THIS IS FUNCTION STILL A PROBLEM; IT WILL CONTINIOUSLY POST IF IT EXCEEDS HTTP TIMEOUT ON HEROKU (30 SECONDS)
   # time.sleep(30)
 
   name = json_data['name']
@@ -82,21 +81,23 @@ def post():
   twitter_secret = json_data['twitter_secret']
   i=0
   if len(captions) != len(imgurls):
-    shorterlist = min(len(captions), len(imgurls))
-    for item in range(shorterlist):
-      imgurl = "https:" + imgurls[i]
-      caption = captions[i]
-      # Twitter submission
-      Twitter = tweet(caption, imgurl, twitter_token, twitter_secret)
-      # Facebook submission
-      Facebook = facebook_post(caption, imgurl, meta_key)
-      # Instagram submission
-      Instagram = instagram_post(caption, imgurl, meta_key)
-      i+=1
-      print('There are ' + str(len(captions)) + ' captions. You just finished caption #' + str(i) + '.')
-      if i >= 2:
-        print('BREAK CODE TO STOP POSTING')
-        break
+    listOfPosts = min(len(captions), len(imgurls))
+  else:
+    listOfPosts = len(captions)
+  for item in range(listOfPosts):
+    imgurl = "https:" + imgurls[i]
+    caption = captions[i]
+    # Twitter submission
+    Twitter = tweet(caption, imgurl, twitter_token, twitter_secret) # TODO Doesn't allow videos yet (might be commneted out)
+    # Facebook submission
+    Facebook = facebook_post(caption, imgurl, meta_key) # TODO Haven't tried videos yet
+    # Instagram submission
+    Instagram = instagram_post(caption, imgurl, meta_key) # TODO Need to add reels
+    i+=1
+    print('There are ' + str(len(captions)) + ' captions. You just finished caption #' + str(i) + '.')
+    if i >= 2:
+      print('BREAK CODE TO STOP POSTING') #Otherwise timeouts trigger and re-post
+      break
 
   output = {'Twitter': Twitter, 'Facebook': Facebook, 'Instagram': Instagram}
   api_response = json.dumps(output)

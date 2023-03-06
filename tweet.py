@@ -15,8 +15,8 @@ import os
 consumer_key = os.environ.get('twitter_consumer_key')
 consumer_secret = os.environ.get('twitter_consumer_secret')
 # User specific
-# access_token = os.environ.get('twitter_access_token')
-# access_token_secret = os.environ.get('twitter_access_token_secret')
+access_token = os.environ.get('twitter_access_token')
+access_token_secret = os.environ.get('twitter_access_token_secret')
 # OAuth 2.0 Client Tokens
 client_id = os.environ.get('twitter_client_id')
 client_secret = os.environ.get('twitter_client_secret')
@@ -31,17 +31,25 @@ def tweet(status, media, access_token, access_token_secret):
     # Common tweepy API code insert
     auth.set_access_token(access_token, access_token_secret)
     api = tweepy.API(auth)
-    # tweet with image if local file
-    # api.update_status_with_media(status, media)
 
+    # identify filetype
+    filetype = str(media[-3:])
     url = media
     response = requests.get(url)
+    filename = f"media.{filetype}"
 
-    # tweet image and status
-    with open("image.png", "wb") as f:
+    # download media from user
+    with open(filename, "wb") as f:
         f.write(response.content)
-    api.update_status_with_media(status, 'image.png')
-    message = "Success!"
+
+    # upload media to twitter
+    if filetype == "jpg" or filetype == "png" or filetype == "gif" or filetype == "mp4":
+    #     api.update_status_with_media(status, filename) #This method is deprecated
+        mediaIDcreator = api.media_upload(filename)
+        api.update_status(status, media_ids=[mediaIDcreator.media_id_string])
+        message = "Success!"
+    else:
+        message = "Wrong File Upload Type!"
     return message
 
 # def tweet_video(status,media,access_token,access_token_secret):
