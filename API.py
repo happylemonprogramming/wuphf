@@ -18,6 +18,9 @@ from facebookgraphapi import *
 from instagramgraphapi import *
 from metakeygenerator import *
 
+# YouTube API
+from youtube import *
+
 # Other Python files and functions
 from imagereadlightdark import *
 
@@ -45,10 +48,23 @@ def status():
   tags = json_data['tags']
   # NOTE: using a list of tags of images would slow down the HTTP return; better to have the API called several times
   # NOTE: paradox exists that the more images that are uploaded, the more bubble work there is; but that's more reliable than running list in the API [worthwhile tradeoff]
-  # AI text generation
-  response = caption(tonality,influencer,tags)
-  # Transform to dictionary format
-  dictionary = {"api_output": response[0], 'random': response[1]}
+  if imgurl.endswith['.png', '.jpg', '.jpeg', '.gif']:
+    # AI text generation
+    response = caption(tonality,influencer,tags)
+    # Transform to dictionary format
+    dictionary = {'caption': response[0], 'cost': response[1]}
+  elif imgurl.endswith['.mp4']:
+    # AI text generation
+    response = caption(tonality,influencer,tags)
+    # AI video title & description generation
+    title = youtube_title(tonality,influencer,tags)
+    description = youtube_description(tonality,influencer,tags)
+    # Total cost of AI text generation
+    cost = response[1]+title[1]+description[1]
+    # Transform to dictionary format
+    dictionary = {'caption': response[0], 'title': title[0], 'description': description[0], 'cost': cost}
+  else:
+    dictionary = {'caption': 'Error: Image format not supported', 'cost': 0}
   # Transform to JSON
   api_response = json.dumps(dictionary)
   return api_response
@@ -79,6 +95,10 @@ def post():
   meta_key = json_data['meta_key']
   twitter_token = json_data['twitter_token']
   twitter_secret = json_data['twitter_secret']
+  youtube_key = json_data['youtube_key']
+  tags = json_data['tags']
+  tonality = json_data['tonality']
+  influencer = json_data['influencer']
   i=0
   if len(captions) != len(imgurls):
     listOfPosts = min(len(captions), len(imgurls))
@@ -88,18 +108,22 @@ def post():
     imgurl = "https:" + imgurls[i]
     caption = captions[i]
     # Twitter submission
-    Twitter = tweet(caption, imgurl, twitter_token, twitter_secret) # TODO Doesn't allow videos yet (might be commneted out)
+    Twitter = tweet(caption, imgurl, twitter_token, twitter_secret)
     # Facebook submission
-    Facebook = facebook_post(caption, imgurl, meta_key) # TODO Haven't tried videos yet
+    Facebook = facebook_post(caption, imgurl, meta_key)
     # Instagram submission
-    Instagram = instagram_post(caption, imgurl, meta_key) # TODO Need to add reels
+    Instagram = instagram_post(caption, imgurl, meta_key)
+    # YouTube submission
+    if imgurl.endswith('mp4'):
+      YouTube = youtube_upload(imgurl, youtube_key, name, tonality, influencer, tags)
+
     i+=1
     print('There are ' + str(len(captions)) + ' captions. You just finished caption #' + str(i) + '.')
     if i >= 2:
       print('BREAK CODE TO STOP POSTING') #Otherwise timeouts trigger and re-post
       break
 
-  output = {'Twitter': Twitter, 'Facebook': Facebook, 'Instagram': Instagram}
+  output = {'Twitter': Twitter, 'Facebook': Facebook, 'Instagram': Instagram, 'YouTube': YouTube}
   api_response = json.dumps(output)
   # api_response = 'yo'
 

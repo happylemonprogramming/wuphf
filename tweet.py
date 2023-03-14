@@ -3,7 +3,7 @@ import tweepy
 import requests
 from datetime import datetime
 import os
-
+from tweet_video import *
 # Resources
 # Need to visit website below to implement logging in with Twitter:
 # https://developer.twitter.com/en/docs/authentication/oauth-1-0a/obtaining-user-access-tokens#:~:text=Twitter%20allows%20you%20to%20obtain,having%20them%20authorize%20your%20application.
@@ -43,11 +43,16 @@ def tweet(status, media, access_token, access_token_secret):
         f.write(response.content)
 
     # upload media to twitter
-    if filetype == "jpg" or filetype == "png" or filetype == "gif" or filetype == "mp4":
+    if filetype == "jpg" or filetype == "png" or filetype == "gif": #only allows 30 second video
     #     api.update_status_with_media(status, filename) #This method is deprecated
         mediaIDcreator = api.media_upload(filename)
         api.update_status(status, media_ids=[mediaIDcreator.media_id_string])
         message = "Success!"
+
+    elif filetype == "mp4":
+        # mediaIDcreator = api.chuncked_upload_init(total_bytes=os.path.getsize(filename), media_type='video/mp4', media_category='tweet_video')
+        tweet_video(status, filename, access_token, access_token_secret)
+
     else:
         message = "Wrong File Upload Type!"
     return message
