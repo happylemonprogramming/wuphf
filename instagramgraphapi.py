@@ -13,6 +13,12 @@ user_access_token = os.environ.get('meta_user_access_token')
 
 # API Function to post to Instagram
 def instagram_post(caption, media, user_access_token):
+    # # Check for https
+    if 'https:' in media or 'http:' in media:
+        pass
+    else:
+        media = "https:" + media
+
     # # Get Pages ID
     id_url = "https://graph.facebook.com/me/accounts"
     id_data = {"access_token": user_access_token}
@@ -43,6 +49,7 @@ def instagram_post(caption, media, user_access_token):
             "caption": caption
             }
     response = requests.post(container_url, params=container_data)
+    print(response.json())
     container_id = response.json()['id']
     print(container_id)
     # # Post to Instagram
@@ -69,6 +76,7 @@ def instagram_post(caption, media, user_access_token):
             check = None
             time.sleep(5)
             retry += 1
+            print(response.json())
             print(f"Attempting to retry #{retry}")
         else:
             # failure

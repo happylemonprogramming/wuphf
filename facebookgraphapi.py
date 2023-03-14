@@ -25,7 +25,11 @@ def facebook_post(caption, media, user_access_token):
     # Identify File Type
     filetype = str(media[-3:])
     print(filetype)
-    media_url = 'https:'+media #didn't post because of https:https://... may need to make an if statement, but not sure because amazon s3 is no https
+    # # Check for https
+    if 'https:' in media or 'http:' in media:
+        media_url = media
+    else:
+        media_url = 'https:' + media
     print(media_url)
     # Image Post
     if filetype == 'jpg' or filetype == 'png' or filetype == 'gif':

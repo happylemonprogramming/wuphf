@@ -3,7 +3,9 @@ import tweepy
 import requests
 from datetime import datetime
 import os
+import io
 from tweet_video import *
+
 # Resources
 # Need to visit website below to implement logging in with Twitter:
 # https://developer.twitter.com/en/docs/authentication/oauth-1-0a/obtaining-user-access-tokens#:~:text=Twitter%20allows%20you%20to%20obtain,having%20them%20authorize%20your%20application.
@@ -34,24 +36,39 @@ def tweet(status, media, access_token, access_token_secret):
 
     # identify filetype
     filetype = str(media[-3:])
-    url = media
-    response = requests.get(url)
-    filename = f"media.{filetype}"
+    # # Check for https
+    if 'https:' in media or 'http:' in media:
+        url = media
+    else:
+        url = 'https:' + media
+    # response = requests.get(url)
+    # filename = f"media.{filetype}"
 
-    # download media from user
-    with open(filename, "wb") as f:
-        f.write(response.content)
+    # # download media from user
+    # with open(filename, "wb") as f:
+    #     f.write(response.content)
 
-    # upload media to twitter
+    # Upload media to twitter
     if filetype == "jpg" or filetype == "png" or filetype == "gif": #only allows 30 second video
     #     api.update_status_with_media(status, filename) #This method is deprecated
-        mediaIDcreator = api.media_upload(filename)
-        api.update_status(status, media_ids=[mediaIDcreator.media_id_string])
+        # mediaIDcreator = api.media_upload(filename)
+        # api.update_status(status, media_ids=[mediaIDcreator.media_id_string])
+
+        # Download the media content from the URL and create a file-like object
+        filename = os.path.basename(url)
+        response = requests.get(url)
+        media_content = io.BytesIO(response.content)
+
+        # Upload the media file to Twitter
+        upload = api.media_upload(filename=filename, file=media_content)
+
+        # Now you can use the media ID to attach the media to a tweet
+        api.update_status(status=status, media_ids=[upload.media_id])
         message = "Success!"
 
     elif filetype == "mp4":
         # mediaIDcreator = api.chuncked_upload_init(total_bytes=os.path.getsize(filename), media_type='video/mp4', media_category='tweet_video')
-        tweet_video(status, filename, access_token, access_token_secret)
+        tweet_video(status, media, access_token, access_token_secret)
         message = "Success!"
 
     else:

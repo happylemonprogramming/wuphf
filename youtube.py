@@ -239,9 +239,14 @@ def youtube_upload(video_url, key, name, tonality, influencer, tags):
 
   # _________________________________________________________________
   # # Upload function for server files
-  def initialize_upload(youtube, video_url):
+  def initialize_upload(youtube, media):
+    # # Check for https
+    if 'https:' in media or 'http:' in media:
+        video_url = media
+    else:
+        video_url = 'https:' + media
     # Download the video file from the URL and create a MediaIoBaseUpload object
-    video_content = requests.get('https:'+video_url).content
+    video_content = requests.get(video_url).content
     video_stream = io.BytesIO(video_content)
     media = MediaIoBaseUpload(video_stream, mimetype='video/*', chunksize=-1, resumable=True)
 

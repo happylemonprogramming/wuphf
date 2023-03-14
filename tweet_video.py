@@ -35,7 +35,12 @@ def tweet_video(caption, imgurl, twitter_token, twitter_secret):
             '''
             Defines video tweet properties
             '''
-            self.video_url = 'https:'+file_name
+                # # Check for https
+            if 'https:' in file_name or 'http:' in file_name:
+                self.video_url = file_name
+            else:
+                self.video_url = "https:" + file_name
+
             self.total_bytes = self.get_file_size(self.video_url)
             # self.video_filename = file_name #local file
             # self.total_bytes = os.path.getsize(self.video_filename) #local file
