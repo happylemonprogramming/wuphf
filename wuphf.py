@@ -17,7 +17,7 @@ influencer = sys.argv[10]
 i = sys.argv[11]
 
 
-
+print('DATETIME IS: ', youtube_key)
 start_time = time.time()
 # caption = 'This is a test'
 # imgurl = '//s3.amazonaws.com/appforest_uf/f1678073597751x317044281136753500/test.mp4'

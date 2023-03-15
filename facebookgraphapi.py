@@ -95,6 +95,7 @@ def facebook_post(caption, media, user_access_token):
 
         data = {
             "access_token": page_access_token,
+            "message": caption, #TODO This is a new addition, confirm it works
             "file_url": media_url
         }
 
