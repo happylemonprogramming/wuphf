@@ -49,23 +49,23 @@ def status():
   tags = json_data['tags']
   # NOTE: using a list of tags of images would slow down the HTTP return; better to have the API called several times
   # NOTE: paradox exists that the more images that are uploaded, the more bubble work there is; but that's more reliable than running list in the API [worthwhile tradeoff]
-  if imgurl.endswith['.png', '.jpg', '.jpeg', '.gif']:
-    # AI text generation
-    response = caption(tonality,influencer,tags)
-    # Transform to dictionary format
-    dictionary = {'caption': response[0], 'cost': response[1]}
-  elif imgurl.endswith['.mp4']:
-    # AI text generation
-    response = caption(tonality,influencer,tags)
-    # AI video title & description generation
-    title = youtube_title(tonality,influencer,tags)
-    description = youtube_description(tonality,influencer,tags)
-    # Total cost of AI text generation
-    cost = response[1]+title[1]+description[1]
-    # Transform to dictionary format
-    dictionary = {'caption': response[0], 'title': title[0], 'description': description[0], 'cost': cost}
-  else:
-    dictionary = {'caption': 'Error: Image format not supported', 'cost': 0}
+  # if imgurl.endswith['.png', '.jpg', '.jpeg', '.gif']:
+  # AI text generation
+  response = caption(tonality,influencer,tags)
+  # Transform to dictionary format
+  dictionary = {'caption': response[0], 'cost': response[1]}
+  # elif imgurl.endswith['.mp4']:
+  #   # AI text generation
+  #   response = caption(tonality,influencer,tags)
+  #   # AI video title & description generation
+  #   title = youtube_title(tonality,influencer,tags)
+  #   description = youtube_description(tonality,influencer,tags)
+  #   # Total cost of AI text generation
+  #   cost = response[1]+title[1]+description[1]
+  #   # Transform to dictionary format
+  #   dictionary = {'caption': response[0], 'title': title[0], 'description': description[0], 'cost': cost}
+  # else:
+  #   dictionary = {'caption': 'Error: Image format not supported', 'cost': 0}
   # Transform to JSON
   api_response = json.dumps(dictionary)
   return api_response

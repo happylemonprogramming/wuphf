@@ -52,7 +52,7 @@ Instagram = instagram_post(caption, imgurl, meta_key)
 instagram_time = time.time()-relay2
 relay3 = time.time()
 print('Instagram time: ', instagram_time)
-# # YouTube submission
+# # YouTube submission [NEED TO FIGURE OUT CALLBACK URI FROM CLIENT_SECRETS.JSON]
 # if imgurl.endswith('mp4'):
 #     YouTube = youtube_upload(imgurl, youtube_key, name, tonality, influencer, tags)
 #     youtube_time = time.time()-relay3
