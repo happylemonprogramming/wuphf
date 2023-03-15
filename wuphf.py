@@ -3,7 +3,9 @@ from facebookgraphapi import *
 from instagramgraphapi import *
 # from youtube import *
 import time
+import datetime
 
+# Imported arguments from API
 name = sys.argv[1]
 caption = sys.argv[2]
 imgurl = sys.argv[3]
@@ -16,21 +18,17 @@ tonality = sys.argv[9]
 influencer = sys.argv[10]
 i = sys.argv[11]
 
-
-
-
-
-import datetime
-import time
-
 # Parse the input string into a datetime object
 target_date_str = youtube_key
 target_date = datetime.datetime.strptime(target_date_str, "%b %d, %Y %I:%M %p")
+
+# Add 8 hours to target_date to convert to UTC (Universal Time Coordinated)
+target_date += datetime.timedelta(hours=8)
 print('wuphf Youtube Key: ', youtube_key)
 print('wuphf Converted Date: ', target_date)
 print('Server Datetime: ', datetime.datetime.now())
-if datetime.datetime.now() > target_date:
-    print('wtf')
+
+# Check if target_date is in the future
 while datetime.datetime.now() < target_date:
     time.sleep(60)  # Wait for 1 minute
 else:
@@ -41,16 +39,16 @@ else:
     twitter_time = time.time()-start_time
     relay1 = time.time()
     print('Twitter time: ', twitter_time)
-    # # Facebook submission
-    # Facebook = facebook_post(caption, imgurl, meta_key)
-    # facebook_time = time.time()-relay1
-    # relay2 = time.time()
-    # print('Facebook time: ', facebook_time)
-    # # Instagram submission
-    # Instagram = instagram_post(caption, imgurl, meta_key)
-    # instagram_time = time.time()-relay2
-    # relay3 = time.time()
-    # print('Instagram time: ', instagram_time)
+    # Facebook submission
+    Facebook = facebook_post(caption, imgurl, meta_key)
+    facebook_time = time.time()-relay1
+    relay2 = time.time()
+    print('Facebook time: ', facebook_time)
+    # Instagram submission
+    Instagram = instagram_post(caption, imgurl, meta_key)
+    instagram_time = time.time()-relay2
+    relay3 = time.time()
+    print('Instagram time: ', instagram_time)
     # # YouTube submission [NEED TO FIGURE OUT CALLBACK URI FROM CLIENT_SECRETS.JSON]
     # if imgurl.endswith('mp4'):
     #     YouTube = youtube_upload(imgurl, youtube_key, name, tonality, influencer, tags)
