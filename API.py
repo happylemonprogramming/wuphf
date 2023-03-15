@@ -112,7 +112,7 @@ def post():
     caption = captions[i]
 
     # Testing Subprocess
-    subprocess.Popen(["python", "wuphf.py", name, caption, imgurl, meta_key, twitter_token, twitter_secret, youtube_key, tags, tonality, influencer, i])
+    subprocess.Popen(["python", "wuphf.py", name, caption, imgurl, meta_key, twitter_token, twitter_secret, youtube_key, tags, tonality, influencer, str(i)])
 
     # # Twitter submission
     # Twitter = tweet(caption, imgurl, twitter_token, twitter_secret)
