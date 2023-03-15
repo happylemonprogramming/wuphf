@@ -102,6 +102,7 @@ def post():
   influencer = json_data['influencer']
   i=0
 
+  print('API YouTube Key: ', youtube_key)
   if len(captions) != len(imgurls):
     listOfPosts = min(len(captions), len(imgurls))
   else:
