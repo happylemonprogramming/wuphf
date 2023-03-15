@@ -69,6 +69,7 @@ def tweet(status, media, access_token, access_token_secret):
     elif filetype == "mp4":
         # mediaIDcreator = api.chuncked_upload_init(total_bytes=os.path.getsize(filename), media_type='video/mp4', media_category='tweet_video')
         tweet_video(status, media, access_token, access_token_secret)
+        print('Tweet Video Completed')
         message = "Success!"
 
     else:

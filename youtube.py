@@ -84,17 +84,19 @@ def youtube_upload(video_url, key, name, tonality, influencer, tags):
     flow = flow_from_clientsecrets(CLIENT_SECRETS_FILE,
       scope=YOUTUBE_UPLOAD_SCOPE,
       message=MISSING_CLIENT_SECRETS_MESSAGE)
-
-    # key= '{"access_token": "ya29.a0AVvZVsrnJtHq-dI4c6a9Z_wsviPuOYlCaVP6wKsT0_hZY3TC8MG3-5nxVEJbI-9HgWvwpXNHb-CxzXEX_nboQassLgm8Q6s44Ik3QOXyw_PUhD8CTw7A6WvkBcMcBgKWgQR9PFc1Nhmsd4T3Tct4R0voeePjVeUaCgYKAfUSARASFQGbdwaIIBmFCH89f5TVHi-3DQcDQQ0166", "client_id": "1024637340506-mu8d453rjsf4570s4cpq4bpcusrgc79e.apps.googleusercontent.com", "client_secret": "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", "refresh_token": "1//06jLusM0ANN5MCgYIARAAGAYSNwF-L9Ir_nKCLOBbu4g2d5HT24yLPLkIZV4g-3fNRHGOK3vwKbScby2_6K9Dd2b90ALEXJDP7BI", "token_expiry": "2023-03-12T05:59:33Z", "token_uri": "https://oauth2.googleapis.com/token", "user_agent": null, "revoke_uri": "https://oauth2.googleapis.com/revoke", "id_token": null, "id_token_jwt": null, "token_response": {"access_token": "ya29.a0AVvZVsrnJtHq-dI4c6a9Z_wsviPuOYlCaVP6wKsT0_hZY3TC8MG3-5nxVEJbI-9HgWvwpXNHb-CxzXEX_nboQassLgm8Q6s44Ik3QOXyw_PUhD8CTw7A6WvkBcMcBgKWgQR9PFc1Nhmsd4T3Tct4R0voeePjVeUaCgYKAfUSARASFQGbdwaIIBmFCH89f5TVHi-3DQcDQQ0166", "expires_in": 3599, "scope": "https://www.googleapis.com/auth/youtube.upload", "token_type": "Bearer"}, "scopes": ["https://www.googleapis.com/auth/youtube.upload"], "token_info_uri": "https://oauth2.googleapis.com/tokeninfo", "invalid": false, "_class": "OAuth2Credentials", "_module": "oauth2client.client"}'
-
-    # instead of fighting the creation of this file, deliberately create it and save it as a string to pass back to samule  
-    dictionary_output = json.loads(key)
+    
+    # File path to delete [DELETE FILE AFTER USING]
     # Generate a 10-digit random number 
     identifier = random.randint(10**9, (10**10)-1)
-    # File path to delete [DELETE FILE AFTER USING]
     file_path = f"{name}-{identifier}-oauth2.json"
-    with open(file_path, "w") as f:
-      json.dump(dictionary_output, f)
+
+    # key= '{"access_token": "ya29.a0AVvZVsrnJtHq-dI4c6a9Z_wsviPuOYlCaVP6wKsT0_hZY3TC8MG3-5nxVEJbI-9HgWvwpXNHb-CxzXEX_nboQassLgm8Q6s44Ik3QOXyw_PUhD8CTw7A6WvkBcMcBgKWgQR9PFc1Nhmsd4T3Tct4R0voeePjVeUaCgYKAfUSARASFQGbdwaIIBmFCH89f5TVHi-3DQcDQQ0166", "client_id": "1024637340506-mu8d453rjsf4570s4cpq4bpcusrgc79e.apps.googleusercontent.com", "client_secret": "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", "refresh_token": "1//06jLusM0ANN5MCgYIARAAGAYSNwF-L9Ir_nKCLOBbu4g2d5HT24yLPLkIZV4g-3fNRHGOK3vwKbScby2_6K9Dd2b90ALEXJDP7BI", "token_expiry": "2023-03-12T05:59:33Z", "token_uri": "https://oauth2.googleapis.com/token", "user_agent": null, "revoke_uri": "https://oauth2.googleapis.com/revoke", "id_token": null, "id_token_jwt": null, "token_response": {"access_token": "ya29.a0AVvZVsrnJtHq-dI4c6a9Z_wsviPuOYlCaVP6wKsT0_hZY3TC8MG3-5nxVEJbI-9HgWvwpXNHb-CxzXEX_nboQassLgm8Q6s44Ik3QOXyw_PUhD8CTw7A6WvkBcMcBgKWgQR9PFc1Nhmsd4T3Tct4R0voeePjVeUaCgYKAfUSARASFQGbdwaIIBmFCH89f5TVHi-3DQcDQQ0166", "expires_in": 3599, "scope": "https://www.googleapis.com/auth/youtube.upload", "token_type": "Bearer"}, "scopes": ["https://www.googleapis.com/auth/youtube.upload"], "token_info_uri": "https://oauth2.googleapis.com/tokeninfo", "invalid": false, "_class": "OAuth2Credentials", "_module": "oauth2client.client"}'
+    if ':' in key: # if colon in key assume it's a json string
+      # instead of fighting the creation of this file, deliberately create it and save it as a string to pass back to samule
+      dictionary_output = json.loads(key)
+
+      with open(file_path, "w") as f:
+        json.dump(dictionary_output, f)
 
     # storage = Storage("%s-oauth2.json" % sys.argv[0])
     storage = Storage(file_path)

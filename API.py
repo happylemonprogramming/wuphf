@@ -4,6 +4,7 @@ import time
 import datetime
 import json
 import random
+import subprocess
 
 # AI API
 from caption import *
@@ -100,22 +101,28 @@ def post():
   tonality = json_data['tonality']
   influencer = json_data['influencer']
   i=0
+
   if len(captions) != len(imgurls):
     listOfPosts = min(len(captions), len(imgurls))
   else:
     listOfPosts = len(captions)
+
   for item in range(listOfPosts):
-    imgurl = "https:" + imgurls[i]
+    imgurl = imgurls[i]
     caption = captions[i]
-    # Twitter submission
-    Twitter = tweet(caption, imgurl, twitter_token, twitter_secret)
-    # Facebook submission
-    Facebook = facebook_post(caption, imgurl, meta_key)
-    # Instagram submission
-    Instagram = instagram_post(caption, imgurl, meta_key)
-    # YouTube submission
-    if imgurl.endswith('mp4'):
-      YouTube = youtube_upload(imgurl, youtube_key, name, tonality, influencer, tags)
+
+    # Testing Subprocess
+    subprocess.Popen(["python", "wuphf.py", name, caption, imgurl, meta_key, twitter_token, twitter_secret, youtube_key, tags, tonality, influencer, i])
+
+    # # Twitter submission
+    # Twitter = tweet(caption, imgurl, twitter_token, twitter_secret)
+    # # Facebook submission
+    # Facebook = facebook_post(caption, imgurl, meta_key)
+    # # Instagram submission
+    # Instagram = instagram_post(caption, imgurl, meta_key)
+    # # YouTube submission
+    # if imgurl.endswith('mp4'):
+    #   YouTube = youtube_upload(imgurl, youtube_key, name, tonality, influencer, tags)
 
     i+=1
     print('There are ' + str(len(captions)) + ' captions. You just finished caption #' + str(i) + '.')
@@ -123,7 +130,8 @@ def post():
       print('BREAK CODE TO STOP POSTING') #Otherwise timeouts trigger and re-post
       break
 
-  output = {'Twitter': Twitter, 'Facebook': Facebook, 'Instagram': Instagram, 'YouTube': YouTube}
+  output = {'Twitter': 'maybe', 'Facebook': 'who knows', 'Instagram': 'pherhaps', 'YouTube': 'i doubt it'}
+  # output = {'Twitter': Twitter, 'Facebook': Facebook, 'Instagram': Instagram, 'YouTube': YouTube}
   api_response = json.dumps(output)
   # api_response = 'yo'
 
