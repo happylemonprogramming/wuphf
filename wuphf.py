@@ -17,7 +17,7 @@ influencer = sys.argv[10]
 i = sys.argv[11]
 
 
-print('DATETIME IS: ', youtube_key)
+print(youtube_key)
 
 
 import datetime
@@ -26,7 +26,7 @@ import time
 # Parse the input string into a datetime object
 target_date_str = youtube_key
 target_date = datetime.datetime.strptime(target_date_str, "%b %d, %Y %I:%M %p")
-
+print(target_date)
 while datetime.datetime.now() < target_date:
     time.sleep(60)  # Wait for 1 minute
 else:
