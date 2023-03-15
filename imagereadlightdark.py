@@ -62,9 +62,9 @@ def imagereadlightdark(listofimageurls):
     # return lightdarkdict
     return None
 
-listofimageurls = ['//s3.amazonaws.com/appforest_uf/f1677559888855x607469259013140400/example.PNG', 
-                   '//s3.amazonaws.com/appforest_uf/f1677559889650x369774974835638700/warzone%202.png', 
-                   '//s3.amazonaws.com/appforest_uf/f1677559953479x124276868361050900/jean-estrella-yqaTqfoetTY-unsplash.jpg',
-                   '//s3.amazonaws.com/appforest_uf/f1677559888855x607469259013140400/example.PNG']
+# listofimageurls = ['//s3.amazonaws.com/appforest_uf/f1677559888855x607469259013140400/example.PNG', 
+#                    '//s3.amazonaws.com/appforest_uf/f1677559889650x369774974835638700/warzone%202.png', 
+#                    '//s3.amazonaws.com/appforest_uf/f1677559953479x124276868361050900/jean-estrella-yqaTqfoetTY-unsplash.jpg',
+#                    '//s3.amazonaws.com/appforest_uf/f1677559888855x607469259013140400/example.PNG']
 
-imagereadlightdark(listofimageurls)
+# imagereadlightdark(listofimageurls)

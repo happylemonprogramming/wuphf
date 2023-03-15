@@ -22,8 +22,8 @@ from metakeygenerator import *
 # YouTube API
 from youtube import *
 
-# Other Python files and functions
-from imagereadlightdark import *
+# # Other Python files and functions
+# from imagereadlightdark import *
 
 # Web Server Library
 from flask import Flask, render_template, jsonify, request
