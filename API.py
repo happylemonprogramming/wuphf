@@ -187,6 +187,29 @@ def twitterkey():
 
   return api_response
 
+
+# Route for AI generated text
+@app.route('/emilyfunction', methods=["POST"])
+def emily():
+  #Example JSON
+    # JSON Body = {"prompt": "create a caption for this:"}
+
+  # Variable loading for JSON
+  json_data = request.get_json()
+  prompt = json_data['prompt']
+
+  # AI generated text
+  response = emily_function(prompt)
+  
+  # Transform to dictionary format
+  dictionary = {'caption': response[0], 'cost': response[1]}
+
+  # Transform to JSON
+  api_response = json.dumps(dictionary)
+  return api_response
+
+
+
 # Run app on server (must be at end of code)
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True, threaded=True) # Change host back to 0.0.0.0, if needed or http(s)://127.0.0.1

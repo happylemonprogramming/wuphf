@@ -55,7 +55,7 @@ def instagram_post(caption, media, user_access_token):
     # # Post to Instagram
     check = None
     retry = 0
-    while check is None or retry < 10:
+    while check is None and retry < 10:
         post_url = f"https://graph.facebook.com/{instabiz_id}/media_publish"
         post_data = {
             "access_token": user_access_token, 

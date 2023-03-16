@@ -64,3 +64,20 @@ def youtube_description(tonality,influencer,tags):
     AI_response = response['choices'][0]['text']
     cost = 0.02*(int(response['usage']['total_tokens']))/1000
     return AI_response, cost
+
+
+def emily_function(prompt):
+    response = openai.Completion.create(
+        model="text-davinci-003",
+        prompt=prompt,
+        temperature=0.9,
+        max_tokens=150,
+        top_p=1,
+        frequency_penalty=0.0,
+        presence_penalty=0.6,
+        stop=[" Human:", " AI:"]
+    )
+
+    AI_response = response['choices'][0]['text']
+    cost = 0.02*(int(response['usage']['total_tokens']))/1000
+    return AI_response, cost
