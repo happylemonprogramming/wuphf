@@ -22,6 +22,9 @@ from metakeygenerator import *
 # YouTube API
 from youtube import *
 
+# Strike API
+from lightningpay import *
+
 # # Other Python files and functions
 # from imagereadlightdark import *
 
@@ -187,6 +190,16 @@ def twitterkey():
 
   return api_response
 
+# __________________________________________________________________________________________________________________________________________________________
+
+# Route for Lightning QR Code
+@app.route('/lightning', methods=["GET"])
+def lightning():
+  # Lightning QR Code
+  binaryimagedata = lightning_QRCode()
+  return binaryimagedata
+
+# __________________________________________________________________________________________________________________________________________________________
 
 # Route for AI generated text
 @app.route('/emilyfunction', methods=["POST"])
