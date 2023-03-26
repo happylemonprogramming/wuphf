@@ -3,6 +3,7 @@ import json
 import uuid
 from datetime import datetime
 import os
+import qrcode
 
 strikeapikey = os.environ.get('strikeapikey')
 
@@ -61,8 +62,7 @@ def lightning_quote():
 
 def lightning_QRCode():
   # Generate QR Code
-  import qrcode
-  from PIL import Image
+  # from PIL import Image
   lninv = lightning_quote()[0]
   img = qrcode.make(lninv)
   imgpath = "Strike.png"
