@@ -24,6 +24,7 @@ from youtube import *
 
 # Strike API
 from lightningpay import *
+from qrcodegenerator import *
 
 # # Other Python files and functions
 # from imagereadlightdark import *
@@ -192,11 +193,27 @@ def twitterkey():
 
 # __________________________________________________________________________________________________________________________________________________________
 
-# Route for Lightning QR Code
+# Route for Lightning Address Generation and Conversion Rate
 @app.route('/lightning', methods=["GET"])
 def lightning():
   # Lightning QR Code
-  binaryimagedata = lightning_QRCode()
+  lninv = lightning_quote()[0]
+  conv_rate = lightning_quote()[1]
+  return lninv, conv_rate
+
+# __________________________________________________________________________________________________________________________________________________________
+
+# Route for Lightning QR Code
+@app.route('/qrcode', methods=["POST"])
+def QR():
+  #Example JSON
+  # JSON Body = {"lninv": "lnbc1..."}
+
+  # Variable loading for JSON
+  json_data = request.get_json()
+  lninv = json_data['lninv']
+  # Lightning QR Code
+  binaryimagedata = QR_Code(lninv)
   return binaryimagedata
 
 # __________________________________________________________________________________________________________________________________________________________

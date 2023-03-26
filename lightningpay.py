@@ -60,18 +60,18 @@ def lightning_quote():
 
 # print(lightning_quote())
 
-def lightning_QRCode():
-  # Generate QR Code
-  # from PIL import Image
-  lninv = lightning_quote()[0]
-  conv_rate = lightning_quote()[1]
-  img = qrcode.make(lninv)
-  imgpath = "Strike.png"
-  img.save(imgpath)
+# def lightning_QRCode():
+#   # Generate QR Code
+#   # from PIL import Image
+#   lninv = lightning_quote()[0]
+#   conv_rate = lightning_quote()[1]
+#   img = qrcode.make(lninv)
+#   imgpath = "Strike.png"
+#   img.save(imgpath)
 
-  # Read the image file as binary data
-  with open(imgpath, 'rb') as f:
-      image_data = f.read()
-  return image_data
+#   # Read the image file as binary data
+#   with open(imgpath, 'rb') as f:
+#       image_data = f.read()
+#   return image_data
 
-# print(lightning_QRCode())
+# # print(lightning_QRCode())
