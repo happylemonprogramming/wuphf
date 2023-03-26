@@ -197,8 +197,10 @@ def twitterkey():
 @app.route('/lightning', methods=["GET"])
 def lightning():
   # Lightning QR Code
-  lninv = lightning_quote()[0]
-  conv_rate = lightning_quote()[1]
+  quote = lightning_quote()
+  lninv = quote[0]
+  conv_rate = quote[1]
+
   return lninv, conv_rate
 
 # __________________________________________________________________________________________________________________________________________________________
@@ -211,6 +213,7 @@ def QR():
 
   # Variable loading for JSON
   json_data = request.get_json()
+  print(json_data)
   lninv = json_data['lninv']
   # Lightning QR Code
   binaryimagedata = QR_Code(lninv)
