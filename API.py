@@ -200,8 +200,10 @@ def lightning():
   quote = lightning_quote()
   lninv = quote[0]
   conv_rate = quote[1]
+  dictionary = {"lninv": lninv, 'btcusdrate': conv_rate}
+  api_response = json.dumps(dictionary)
 
-  return lninv, conv_rate
+  return api_response
 
 # __________________________________________________________________________________________________________________________________________________________
 
