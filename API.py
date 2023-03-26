@@ -197,10 +197,7 @@ def twitterkey():
 def lightning():
   # Lightning QR Code
   binaryimagedata = lightning_QRCode()
-  imagedata = binaryimagedata[0]
-  address = binaryimagedata[1]
-  rate = binaryimagedata[2]
-  return imagedata, address, rate
+  return binaryimagedata
 
 # __________________________________________________________________________________________________________________________________________________________
 

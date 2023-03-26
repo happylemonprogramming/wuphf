@@ -72,6 +72,6 @@ def lightning_QRCode():
   # Read the image file as binary data
   with open(imgpath, 'rb') as f:
       image_data = f.read()
-  return image_data, lninv, conv_rate
+  return image_data
 
 # print(lightning_QRCode())
