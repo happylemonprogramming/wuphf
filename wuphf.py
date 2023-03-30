@@ -18,6 +18,28 @@ tonality = sys.argv[9]
 influencer = sys.argv[10]
 i = sys.argv[11]
 
+# # Suppose to take in 3 lists of data and sort them by date
+# # Sample input data
+# dates = ['2022-01-01', '2021-12-31', '2022-01-02']
+# image_urls = ['url1', 'url2', 'url3']
+# strings = ['string1', 'string2', 'string3']
+
+# # Combine the lists into a list of tuples
+# combined_data = list(zip(dates, image_urls, strings))
+
+# # Sort the list of tuples by date
+# sorted_data = sorted(combined_data)
+
+# # Extract the sorted image urls and strings into new lists
+# sorted_image_urls = [t[1] for t in sorted_data]
+# sorted_strings = [t[2] for t in sorted_data]
+
+# # Print the sorted data for verification
+# print(sorted_data)
+# print(sorted_image_urls)
+# print(sorted_strings)
+
+
 # Parse the input string into a datetime object
 target_date_str = youtube_key
 target_date = datetime.datetime.strptime(target_date_str, "%b %d, %Y %I:%M %p")

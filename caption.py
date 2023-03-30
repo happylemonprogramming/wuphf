@@ -8,7 +8,7 @@ openai.api_key = os.environ["openaiapikey"]
 def caption(tonality,influencer,tags):
     response = openai.Completion.create(
         model="text-davinci-003",
-        prompt=f'Using the tags: {tags}, create a {tonality} post in tweet format in the voice of {influencer}: ',
+        prompt=f'Using the tags: {tags}, create a {tonality} post in tweet format in the voice of {influencer} without referencing {influencer}: ',
         # prompt='Using the tags ' + tags + ', create a post in tweet format: ',
         # prompt='Take the following tags and put them into a tweet format: ' + user_prompt, # cuts off tweet
         # prompt='Using the tags ' + user_prompt + ', write a joke in tweet format: ', # terrible jokes
@@ -21,7 +21,7 @@ def caption(tonality,influencer,tags):
         stop=[" Human:", " AI:"]
     )
 
-    AI_response = response['choices'][0]['text']
+    AI_response = response['choices'][0]['text'].replace('\n\n', '').replace('"', '')
     cost = 0.02*(int(response['usage']['total_tokens']))/1000
     return AI_response, cost
 
@@ -81,3 +81,6 @@ def emily_function(prompt):
     AI_response = response['choices'][0]['text']
     cost = 0.02*(int(response['usage']['total_tokens']))/1000
     return AI_response, cost
+
+if __name__ == '__main__':
+    print(caption('funny','Kevin Hart', 'bananas, chocolate, mint')[0])
