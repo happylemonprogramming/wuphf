@@ -64,7 +64,7 @@
 # # Print the list of substrings
 # print(substrings)
 
-# Input string
+# # Input string
 string = 'Apr 1, 2023 9:30 pm, Apr 1, 2023 10:00 pm'
 
 # Split the string into a list of substrings, using ", " as the delimiter
@@ -73,4 +73,19 @@ substrings = string.split(", ")
 result = []
 for i in range(0, len(substrings), 2):
     result.append(substrings[i] + " " + substrings[i+1])
-    print(result)
+    # print(result)
+
+
+captions = ["\n\nJust when I thought I've seen it all, my buddy calls me to come over and watch a dinosaur and lemon battle. This ain't no ordinary fight club! #DaveChappelle", "\n\nI just got struck by lightning while making a lemonade... oh well, at least the drink will be extra strong this time! #LightningLemon #DaveChappelle"]
+imgurls = ['//s3.amazonaws.com/appforest_uf/f1675978942446x792425085319267600/Lemon%20%26%20T-Rex.png', '//s3.amazonaws.com/appforest_uf/f1675978976428x846564285372801800/Lightning%20%26%20Lemon%202.png']
+
+listOfPosts = len(captions)
+i=0
+# Loop through all posts
+for item in range(listOfPosts): #TODO: can probably change 'item' for 'i' and then delete i = 0
+    imgurl = imgurls[i]
+    caption = captions[i]
+    post_time = result[i]
+    # print('API Print Time 2:', post_time)
+    print(item, imgurl, caption, post_time)
+    i += 1

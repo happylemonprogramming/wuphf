@@ -119,7 +119,7 @@ def post():
   i=0
 
   # Heroku Notification
-  print('API Temporary Token: ', post_time) #TODO: currently used for passing the date to the subprocess
+  print('API Type: ', type(post_time)) #TODO: currently used for passing the date to the subprocess
 
   # Check if there are more captions than images
   if len(captions) != len(imgurls):
@@ -131,6 +131,8 @@ def post():
   for item in range(listOfPosts): #TODO: can probably change 'item' for 'i' and then delete i = 0
     imgurl = imgurls[i]
     caption = captions[i]
+    print(i)
+    print(item)
     post_time = post_time[i]
     print('API Print Time 2:', post_time)
     print(item, imgurl, caption, post_time)
