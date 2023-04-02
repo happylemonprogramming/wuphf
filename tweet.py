@@ -83,7 +83,7 @@ def tweet(status, media, access_token, access_token_secret):
     return message
 
 if __name__ == "__main__":
-    test = tweet("Test Tweet", "https://s3.amazonaws.com/appforest_uf/f1680394236778x729120875188918300/5-Second%20Test%20Video.mp4?AWSAccessKeyId=AKIATBBF73RNGVJNFEZN&Expires=1680456935&Signature=aahDg2jx3q8SLi9rK7PsoEkvmwY%3D", access_token, access_token_secret)
+    test = tweet("Test Tweet", "https://samule.bubbleapps.io/version-test/fileupload/f1680394236778x729120875188918300/5-Second%20Test%20Video.mp4", access_token, access_token_secret)
     print(test)
 
 # _________________________________________________________________________________________

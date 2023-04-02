@@ -52,8 +52,11 @@ def tweet_video(caption, imgurl, twitter_token, twitter_secret):
             Returns file size in bytes
             '''
             print("URL: ", url)
+            headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'}
+            response = requests.get(url, headers=headers)
+            print(response)
             response = requests.head(url)
-            print("Response: ", response.text)
+            print("Response: ", response)
             if 'Content-Length' in response.headers:
                 return int(response.headers['Content-Length'])
             else:
