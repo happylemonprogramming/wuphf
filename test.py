@@ -87,5 +87,13 @@ for item in range(listOfPosts): #TODO: can probably change 'item' for 'i' and th
     caption = captions[i]
     post_time = result[i]
     # print('API Print Time 2:', post_time)
-    print(item, imgurl, caption, post_time)
+    # print(item, imgurl, caption, post_time)
     i += 1
+import datetime
+target_date_list = result
+print(target_date_list)
+print(range(len(target_date_list)))
+for i in range(len(target_date_list)):
+    print(target_date_list[i])
+    target_date = datetime.datetime.strptime(target_date_list[i], "%b %d %Y %I:%M %p")
+    print(target_date)
