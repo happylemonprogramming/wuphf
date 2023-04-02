@@ -94,7 +94,7 @@ def post():
   print("NEW POST REQUEST HAS BEEN INITIATED")
   json_data = request.get_json()
   name = json_data['name']
-  captions = json_data['caption'].split(',   ') #TODO: fix this hacky way of splitting the captions with double spaces
+  captions = json_data['caption'].split(', ') #TODO: fix this hacky way of splitting the captions with double spaces
   imgurls = json_data['imgurl'].split(', ')
   post_time = json_data['youtube_key'].split('m, ') #TODO: I think this needs to be split?
   meta_key = json_data['meta_key']
