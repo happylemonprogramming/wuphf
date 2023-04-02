@@ -41,6 +41,10 @@ target_date = datetime.datetime.strptime(target_date_str, "%b %d %Y %I:%M %p")
 
 # Add 8 hours to target_date to convert to UTC (Universal Time Coordinated)
 target_date += datetime.timedelta(hours=7) # 8 hours for PST less 1 for DST
+
+print('Requested Media: ', imgurl)
+print('Requested Caption: ', caption)
+print('Requested Time: ', post_time)
 print('wuphf Converted Date: ', target_date)
 print('Server Datetime: ', datetime.datetime.now())
 
