@@ -93,10 +93,14 @@ def post():
   # Variable loading for JSON
   print("NEW POST REQUEST HAS BEEN INITIATED")
   json_data = request.get_json()
+  print('JSON data:', json_data)
   name = json_data['name']
   captions = json_data['caption'].split(', ') #TODO: fix this hacky way of splitting the captions with double spaces
   imgurls = json_data['imgurl'].split(', ')
-  post_time = json_data['youtube_key'].split('m, ') #TODO: I think this needs to be split?
+  time_string = json_data['youtube_key'] #TODO: I think this needs to be split?
+  # Group the input string into a list of substrings of 19 characters each, skipping the 20th character
+  post_time = [time_string[i:i+19] for i in range(0, len(time_string), 20)]
+  print('API Print Time 1:', post_time)
   meta_key = json_data['meta_key']
   twitter_token = json_data['twitter_token']
   twitter_secret = json_data['twitter_secret']
@@ -119,7 +123,8 @@ def post():
   for item in range(listOfPosts): #TODO: can probably change 'item' for 'i' and then delete i = 0
     imgurl = imgurls[i]
     caption = captions[i]
-    post_time = post_time[i]+"m"
+    post_time = post_time[i]
+    print('API Print Time 2:', post_time)
     print(item, imgurl, caption, post_time)
     # Post to social media via subprocess so customer return is immediate on Heroku and Bubble (otherwise timeouts trigger and re-post)
     subprocess.Popen(["python", "wuphf.py", name, caption, imgurl, meta_key, twitter_token, twitter_secret, post_time, tags, tonality, influencer, str(i)])
