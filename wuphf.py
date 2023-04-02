@@ -10,9 +10,9 @@ import datetime
 name = sys.argv[1]
 
 # Post Content
-caption = sys.argv[2].split(',   ') #TODO: fix this hacky way of splitting the captions with double spaces
-imgurl = sys.argv[3].split(', ')
-post_time = sys.argv[7].split('m, ') #TODO: I think this needs to be split?
+caption = sys.argv[2]
+imgurl = sys.argv[3]
+post_time = sys.argv[7]
 # Heroku Notification
 print('How the Input is Received:')
 print(sys.argv[2])

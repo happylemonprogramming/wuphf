@@ -120,6 +120,7 @@ def post():
     imgurl = imgurls[i]
     caption = captions[i]
     post_time = post_time[i]+"m"
+    print(item, imgurl, caption, post_time)
     # Post to social media via subprocess so customer return is immediate on Heroku and Bubble (otherwise timeouts trigger and re-post)
     subprocess.Popen(["python", "wuphf.py", name, caption, imgurl, meta_key, twitter_token, twitter_secret, post_time, tags, tonality, influencer, str(i)])
     i+=1
