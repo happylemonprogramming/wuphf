@@ -34,8 +34,7 @@ def tweet(status, media, access_token, access_token_secret):
     auth.set_access_token(access_token, access_token_secret)
     api = tweepy.API(auth)
 
-    # identify filetype
-    filetype = str(media[-3:])
+
     # # Check for https
     if 'https:' in media or 'http:' in media:
         url = media
@@ -48,14 +47,20 @@ def tweet(status, media, access_token, access_token_secret):
     # with open(filename, "wb") as f:
     #     f.write(response.content)
 
-    # Upload media to twitter
-    if filetype == "jpg" or filetype == "png" or filetype == "gif": #only allows 30 second video
+    # # identify filetype
+    # filetype = str(media[-3:])
+    # # Upload media to twitter
+    # if filetype == "jpg" or filetype == "png" or filetype == "gif": #only allows 30 second video
+
+    if "jpg" in media or "png" in media or "gif" in media:
     #     api.update_status_with_media(status, filename) #This method is deprecated
         # mediaIDcreator = api.media_upload(filename)
         # api.update_status(status, media_ids=[mediaIDcreator.media_id_string])
 
         # Download the media content from the URL and create a file-like object
         filename = os.path.basename(url)
+        filename = filename.split("?")[0]
+
         response = requests.get(url)
         media_content = io.BytesIO(response.content)
 
@@ -66,7 +71,8 @@ def tweet(status, media, access_token, access_token_secret):
         api.update_status(status=status, media_ids=[upload.media_id])
         message = "Success!"
 
-    elif filetype == "mp4":
+    # elif filetype == "mp4":
+    elif "mp4" in media:
         # mediaIDcreator = api.chuncked_upload_init(total_bytes=os.path.getsize(filename), media_type='video/mp4', media_category='tweet_video')
         tweet_video(status, media, access_token, access_token_secret)
         print('Tweet Video Completed')
@@ -76,6 +82,11 @@ def tweet(status, media, access_token, access_token_secret):
         message = "Wrong File Upload Type!"
     return message
 
+if __name__ == "__main__":
+    test = tweet("Test Tweet", "https://s3.amazonaws.com/appforest_uf/f1680394252874x938063655836151700/sweating%20wuphf.jpg?AWSAccessKeyId=AKIATBBF73RNGVJNFEZN&Expires=1680456723&Signature=jGeh%2FzuBzlrQUDll4FnNFb4Uslg%3D", access_token, access_token_secret)
+    print(test)
+
+# _________________________________________________________________________________________
 # def tweet_video(status,media,access_token,access_token_secret):
 #     # Common tweepy API code insert
 #     auth.set_access_token(access_token, access_token_secret)

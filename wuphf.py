@@ -55,7 +55,7 @@ else:
     start_time = time.time()
     print('wuphf.py is running')
     # Twitter submission
-    # Twitter = tweet(caption, imgurl, twitter_token, twitter_secret)
+    Twitter = tweet(caption, imgurl, twitter_token, twitter_secret)
     twitter_time = time.time()-start_time
     relay1 = time.time()
     print('Twitter time: ', twitter_time)
@@ -65,7 +65,7 @@ else:
     relay2 = time.time()
     print('Facebook time: ', facebook_time)
     # Instagram submission
-    Instagram = instagram_post(caption, imgurl, meta_key)
+    # Instagram = instagram_post(caption, imgurl, meta_key)
     instagram_time = time.time()-relay2
     relay3 = time.time()
     print('Instagram time: ', instagram_time)
