@@ -37,7 +37,7 @@ twitter_secret = sys.argv[6]
 # For 1 post_________________________________________________________
 # Parse the input string into a datetime object
 target_date_str = post_time
-target_date = datetime.datetime.strptime(target_date_str, "%b %d %Y %I:%M %p")
+target_date = datetime.datetime.strptime(target_date_str, "%b %d, %Y %I:%M %p")
 
 # Add 8 hours to target_date to convert to UTC (Universal Time Coordinated)
 target_date += datetime.timedelta(hours=7) # 8 hours for PST less 1 for DST
@@ -51,12 +51,12 @@ else:
     start_time = time.time()
     print('wuphf.py is running')
     # Twitter submission
-    Twitter = tweet(caption, imgurl, twitter_token, twitter_secret)
+    # Twitter = tweet(caption, imgurl, twitter_token, twitter_secret)
     twitter_time = time.time()-start_time
     relay1 = time.time()
     print('Twitter time: ', twitter_time)
     # Facebook submission
-    Facebook = facebook_post(caption, imgurl, meta_key)
+    # Facebook = facebook_post(caption, imgurl, meta_key)
     facebook_time = time.time()-relay1
     relay2 = time.time()
     print('Facebook time: ', facebook_time)
