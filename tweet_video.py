@@ -40,7 +40,7 @@ def tweet_video(caption, imgurl, twitter_token, twitter_secret):
                 self.video_url = file_name
             else:
                 self.video_url = "https:" + file_name
-
+            print("Video URL: ", self.video_url)
             self.total_bytes = self.get_file_size(self.video_url)
             # self.video_filename = file_name #local file
             # self.total_bytes = os.path.getsize(self.video_filename) #local file
@@ -51,7 +51,9 @@ def tweet_video(caption, imgurl, twitter_token, twitter_secret):
             '''
             Returns file size in bytes
             '''
+            print("URL: ", url)
             response = requests.head(url)
+            print("Response: ", response.text)
             if 'Content-Length' in response.headers:
                 return int(response.headers['Content-Length'])
             else:
