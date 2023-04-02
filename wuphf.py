@@ -10,9 +10,9 @@ import datetime
 name = sys.argv[1]
 
 # Post Content
-post_time = sys.argv[7] #TODO: Post time
-caption = sys.argv[2]
-imgurl = sys.argv[3]
+caption = sys.argv[2].split(',   ') #TODO: fix this hacky way of splitting the captions with double spaces
+imgurl = sys.argv[3].split(', ')
+post_time = sys.argv[7].split(', ') #TODO: I think this needs to be split?
 
 # Key Storage
 meta_key = sys.argv[4]
