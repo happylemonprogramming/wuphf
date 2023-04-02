@@ -21,7 +21,7 @@ def caption(tonality,influencer,tags):
         stop=[" Human:", " AI:"]
     )
 
-    AI_response = response['choices'][0]['text'].replace('\n\n', '')
+    AI_response = response['choices'][0]['text'].replace('\n\n', '  ') #TODO: need to remove extra lines for preview, but am separating it out at Post level API
     cost = 0.02*(int(response['usage']['total_tokens']))/1000
     return AI_response, cost
 

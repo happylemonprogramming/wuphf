@@ -53,12 +53,14 @@ def status():
   tags = json_data['tags']
   # NOTE: using a list of tags of images would slow down the HTTP return; better to have the API called several times
   # NOTE: paradox exists that the more images that are uploaded, the more bubble work there is; but that's more reliable than running list in the API [worthwhile tradeoff]
+  
   # if imgurl.endswith['.png', '.jpg', '.jpeg', '.gif']:
   # AI text generation
   response = caption(tonality,influencer,tags)
   # Transform to dictionary format
   dictionary = {'caption': response[0], 'cost': response[1]}
-  # elif imgurl.endswith['.mp4']:
+
+  # elif imgurl.endswith['.mp4']: #TODO: add video support for YouTube
   #   # AI text generation
   #   response = caption(tonality,influencer,tags)
   #   # AI video title & description generation
@@ -70,6 +72,7 @@ def status():
   #   dictionary = {'caption': response[0], 'title': title[0], 'description': description[0], 'cost': cost}
   # else:
   #   dictionary = {'caption': 'Error: Image format not supported', 'cost': 0}
+
   # Transform to JSON
   api_response = json.dumps(dictionary)
   return api_response
@@ -79,7 +82,6 @@ def status():
 @app.route('/post', methods=["POST"])
 def post():
   #Example JSON
-    # JSON Body = {"name": "lemon", "caption": "it works! #yay #moneymaker", "imgurl":"aws.lemonissosmart.com/img"}
     # JSON Body = {
     #               'name': 'Lemon', 
     #               'caption': "\n\nJust when I thought I've seen it all, my buddy calls me to come over and watch a dinosaur and lemon battle. This ain't no ordinary fight club! #DaveChappelle, \n\nI just got struck by lightning while making a lemonade... oh well, at least the drink will be extra strong this time! #LightningLemon #DaveChappelle", 
@@ -91,54 +93,47 @@ def post():
   # Variable loading for JSON
   print("NEW POST REQUEST HAS BEEN INITIATED")
   json_data = request.get_json()
-  # TODO THIS IS FUNCTION STILL A PROBLEM; IT WILL CONTINIOUSLY POST IF IT EXCEEDS HTTP TIMEOUT ON HEROKU (30 SECONDS)
-  # time.sleep(30)
-
   name = json_data['name']
-  captions = json_data['caption'].split(', \n\n')
+  captions = json_data['caption'].split(',   ') #TODO: fix this hacky way of splitting the captions with double spaces
   imgurls = json_data['imgurl'].split(', ')
+  post_time = json_data['youtube_key'].split(', ') #TODO: I think this needs to be split?
   meta_key = json_data['meta_key']
   twitter_token = json_data['twitter_token']
   twitter_secret = json_data['twitter_secret']
-  youtube_key = json_data['youtube_key']
+
   tags = json_data['tags']
   tonality = json_data['tonality']
   influencer = json_data['influencer']
   i=0
 
-  print('API YouTube Key: ', youtube_key)
+  # Heroku Notification
+  print('API Temporary Token: ', post_time) #TODO: currently used for passing the date to the subprocess
+
+  # Check if there are more captions than images
   if len(captions) != len(imgurls):
     listOfPosts = min(len(captions), len(imgurls))
   else:
     listOfPosts = len(captions)
 
-  for item in range(listOfPosts):
+  # Loop through all posts
+  for item in range(listOfPosts): #TODO: can probably change 'item' for 'i' and then delete i = 0
     imgurl = imgurls[i]
     caption = captions[i]
 
-    # Testing Subprocess
-    subprocess.Popen(["python", "wuphf.py", name, caption, imgurl, meta_key, twitter_token, twitter_secret, youtube_key, tags, tonality, influencer, str(i)])
-
-    # # Twitter submission
-    # Twitter = tweet(caption, imgurl, twitter_token, twitter_secret)
-    # # Facebook submission
-    # Facebook = facebook_post(caption, imgurl, meta_key)
-    # # Instagram submission
-    # Instagram = instagram_post(caption, imgurl, meta_key)
-    # # YouTube submission
-    # if imgurl.endswith('mp4'):
-    #   YouTube = youtube_upload(imgurl, youtube_key, name, tonality, influencer, tags)
-
+    # Post to social media via subprocess so customer return is immediate on Heroku and Bubble (otherwise timeouts trigger and re-post)
+    subprocess.Popen(["python", "wuphf.py", name, caption, imgurl, meta_key, twitter_token, twitter_secret, post_time, tags, tonality, influencer, str(i)])
     i+=1
+    # Heroku Notification
     print('There are ' + str(len(captions)) + ' captions. You just finished caption #' + str(i) + '.')
-    if i >= 2:
-      print('BREAK CODE TO STOP POSTING') #Otherwise timeouts trigger and re-post
-      break
 
-  output = {'Twitter': 'maybe', 'Facebook': 'who knows', 'Instagram': 'pherhaps', 'YouTube': 'i doubt it'}
-  # output = {'Twitter': Twitter, 'Facebook': Facebook, 'Instagram': Instagram, 'YouTube': YouTube}
+    # # Break loop if there are more than 2 posts
+    # if i >= 2:
+    #   print('BREAK CODE TO STOP POSTING') #Otherwise timeouts trigger and re-post
+    #   break
+
+  # Response back to Bubble
+  output = {'Twitter': 'maybe', 'Facebook': 'who knows', 'Instagram': 'pherhaps', 'YouTube': 'i doubt it'} #TODO: add errors
   api_response = json.dumps(output)
-  # api_response = 'yo'
 
   return api_response
 # __________________________________________________________________________________________________________________________________________________________
