@@ -55,11 +55,22 @@
 
 
 
+# # Input string
+# string = 'Apr 1, 2023 9:30 pm, Apr 1, 2023 10:00 pm'
+# print(len(string))
+# # Group the input string into a list of substrings of 19 characters each, skipping the 20th character
+# substrings = [string[i:i+20] for i in range(0, len(string), 21)]
+
+# # Print the list of substrings
+# print(substrings)
+
 # Input string
-string = 'Apr 1, 2023 7:00 pm Apr 1, 2023 8:30 pm May 1, 2023 9:00 am May 2, 2023 2:30 pm'
+string = 'Apr 1, 2023 9:30 pm, Apr 1, 2023 10:00 pm'
 
-# Group the input string into a list of substrings of 19 characters each, skipping the 20th character
-substrings = [string[i:i+19] for i in range(0, len(string), 20)]
-
-# Print the list of substrings
-print(substrings)
+# Split the string into a list of substrings, using ", " as the delimiter
+substrings = string.split(", ")
+# Combine every two elements together in the list
+result = []
+for i in range(0, len(substrings), 2):
+    result.append(substrings[i] + " " + substrings[i+1])
+    print(result)

@@ -97,10 +97,18 @@ def post():
   name = json_data['name']
   captions = json_data['caption'].split(', ') #TODO: fix this hacky way of splitting the captions with double spaces
   imgurls = json_data['imgurl'].split(', ')
+
+  # Time management
   time_string = json_data['youtube_key'] #TODO: I think this needs to be split?
-  # Group the input string into a list of substrings of 19 characters each, skipping the 20th character
-  post_time = [time_string[i:i+19] for i in range(0, len(time_string), 20)]
-  print('API Print Time 1:', post_time)
+  # Split the string into a list of substrings, using ", " as the delimiter
+  substrings = time_string.split(", ")
+  # Combine every two elements together in the list
+  post_time = []
+  for i in range(0, len(substrings), 2):
+      post_time.append(substrings[i] + " " + substrings[i+1])
+  print('API Print Time 1:', post_time, len(post_time))
+
+  # Key management
   meta_key = json_data['meta_key']
   twitter_token = json_data['twitter_token']
   twitter_secret = json_data['twitter_secret']
