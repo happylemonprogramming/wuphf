@@ -103,10 +103,10 @@ def post():
   # Split the string into a list of substrings, using ", " as the delimiter
   substrings = time_string.split(", ")
   # Combine every two elements together in the list
-  post_time = []
+  post_times = []
   for i in range(0, len(substrings), 2):
-      post_time.append(substrings[i] + " " + substrings[i+1])
-  print('API Print Time 1:', post_time, len(post_time))
+      post_times.append(substrings[i] + " " + substrings[i+1])
+  print('API Print Time 1:', post_times, len(post_times))
 
   # Key management
   meta_key = json_data['meta_key']
@@ -119,7 +119,7 @@ def post():
   i=0
 
   # Heroku Notification
-  print('API Type: ', type(post_time)) #TODO: currently used for passing the date to the subprocess
+  print('API Type: ', type(post_times)) #TODO: currently used for passing the date to the subprocess
 
   # Check if there are more captions than images
   if len(captions) != len(imgurls):
@@ -133,7 +133,7 @@ def post():
     caption = captions[i]
     print(i)
     print(item)
-    post_time = post_time[i]
+    post_time = post_times[i]
     print('API Print Time 2:', post_time)
     print(item, imgurl, caption, post_time)
     # Post to social media via subprocess so customer return is immediate on Heroku and Bubble (otherwise timeouts trigger and re-post)
