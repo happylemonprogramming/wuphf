@@ -96,7 +96,7 @@ def post():
   name = json_data['name']
   captions = json_data['caption'].split(',   ') #TODO: fix this hacky way of splitting the captions with double spaces
   imgurls = json_data['imgurl'].split(', ')
-  post_time = json_data['youtube_key'] #TODO: I think this needs to be split?
+  post_time = json_data['youtube_key'].split('m, ') #TODO: I think this needs to be split?
   meta_key = json_data['meta_key']
   twitter_token = json_data['twitter_token']
   twitter_secret = json_data['twitter_secret']
@@ -119,7 +119,7 @@ def post():
   for item in range(listOfPosts): #TODO: can probably change 'item' for 'i' and then delete i = 0
     imgurl = imgurls[i]
     caption = captions[i]
-
+    post_time = post_time[i]+"m"
     # Post to social media via subprocess so customer return is immediate on Heroku and Bubble (otherwise timeouts trigger and re-post)
     subprocess.Popen(["python", "wuphf.py", name, caption, imgurl, meta_key, twitter_token, twitter_secret, post_time, tags, tonality, influencer, str(i)])
     i+=1
