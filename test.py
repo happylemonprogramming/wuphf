@@ -111,21 +111,33 @@
 #     print("The URL did not redirect.")
 #     print(response.text)
 
-import requests
-import cv2
+# import requests
+# import cv2
 
-url = 'https://s3.amazonaws.com/appforest_uf/f1680466440777x793583045337100600/father%20son%20travel%20to%20mars%20on%20rocketship.mp4'
+# url = 'https://s3.amazonaws.com/appforest_uf/f1680466440777x793583045337100600/father%20son%20travel%20to%20mars%20on%20rocketship.mp4'
 
-# Read the video file using OpenCV
-cap = cv2.VideoCapture(url)
+# # Read the video file using OpenCV
+# cap = cv2.VideoCapture(url)
 
-# Get the width and height of the video
-width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+# # Get the width and height of the video
+# width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+# height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
-# Calculate the aspect ratio
-aspect_ratio = width / height
+# # Calculate the aspect ratio
+# aspect_ratio = width / height
 
-print(f"Width: {width}")
-print(f"Height: {height}")
-print(f"Aspect Ratio: {aspect_ratio:.2f}")
+# print(f"Width: {width}")
+# print(f"Height: {height}")
+# print(f"Aspect Ratio: {aspect_ratio:.2f}")
+
+import re
+
+string = 'test1, 1681190985056, test2,"hello", 1681190985058, test8,"testinging againg", and again, 1681190985059'
+string = string[:-15]
+
+pattern = re.compile(r', 168\d{10}, ')
+
+content_list = pattern.split(string)
+content_list = [content.strip('"') for content in content_list if not content.strip().isdigit()]
+
+print(content_list)

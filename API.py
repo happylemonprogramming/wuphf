@@ -5,6 +5,7 @@ import datetime
 import json
 import random
 import subprocess
+import re
 
 # AI API
 from caption import *
@@ -95,7 +96,15 @@ def post():
   json_data = request.get_json()
   print('JSON data:', json_data)
   name = json_data['name']
-  captions = json_data['caption'].split(',  ') #TODO: fix this hacky way of splitting the captions with double spaces
+  
+  # captions = json_data['caption'].split(',  ') #TODO: fix this hacky way of splitting the captions with double spaces
+  captions = json_data['caption']
+  captions = captions[:-15] #Remove last UNIX Timestamp
+  # Split the string into a list of substrings, using UNIX Timestamp as the delimiter
+  pattern = re.compile(r', 168\d{10}, ')
+  captions = pattern.split(captions)
+  captions = [content.strip('"') for content in captions if not content.strip().isdigit()]
+
   imgurls = json_data['imgurl'].split(', ')
 
   # Time management
