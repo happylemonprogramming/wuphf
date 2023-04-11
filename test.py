@@ -99,14 +99,33 @@
 #     print(target_date)
 
 
+# import requests
+
+# url = 'https://samule.bubbleapps.io/version-test/fileupload/f1680394252874x938063655836151700/sweating%20wuphf.jpg'
+
+# response = requests.get(url, allow_redirects=False)
+
+# if response.status_code == 302:
+#     print("Redirect URL:", response.headers['Location'])
+# else:
+#     print("The URL did not redirect.")
+#     print(response.text)
+
 import requests
+import cv2
 
-url = 'https://samule.bubbleapps.io/version-test/fileupload/f1680394252874x938063655836151700/sweating%20wuphf.jpg'
+url = 'https://s3.amazonaws.com/appforest_uf/f1680466440777x793583045337100600/father%20son%20travel%20to%20mars%20on%20rocketship.mp4'
 
-response = requests.get(url, allow_redirects=False)
+# Read the video file using OpenCV
+cap = cv2.VideoCapture(url)
 
-if response.status_code == 302:
-    print("Redirect URL:", response.headers['Location'])
-else:
-    print("The URL did not redirect.")
-    print(response.text)
+# Get the width and height of the video
+width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
+# Calculate the aspect ratio
+aspect_ratio = width / height
+
+print(f"Width: {width}")
+print(f"Height: {height}")
+print(f"Aspect Ratio: {aspect_ratio:.2f}")

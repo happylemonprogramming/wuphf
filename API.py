@@ -95,11 +95,11 @@ def post():
   json_data = request.get_json()
   print('JSON data:', json_data)
   name = json_data['name']
-  captions = json_data['caption'].split(', ') #TODO: fix this hacky way of splitting the captions with double spaces
+  captions = json_data['caption'].split(',  ') #TODO: fix this hacky way of splitting the captions with double spaces
   imgurls = json_data['imgurl'].split(', ')
 
   # Time management
-  time_string = json_data['youtube_key'] #TODO: I think this needs to be split?
+  time_string = json_data['schedule'] #TODO: I think this needs to be split?
   # Split the string into a list of substrings, using ", " as the delimiter
   substrings = time_string.split(", ")
   # Combine every two elements together in the list

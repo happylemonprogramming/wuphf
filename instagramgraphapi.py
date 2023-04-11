@@ -33,15 +33,17 @@ def instagram_post(caption, media, user_access_token):
 
     # # Post to Container (Staging)
     container_url = f"https://graph.facebook.com/{instabiz_id}/media"
-    filetype = str(media[-3:])
+    # filetype = str(media[-3:])
 
-    if filetype == "jpg" or filetype == "png" or filetype == "gif":
+    # if filetype == "jpg" or filetype == "png" or filetype == "gif":
+    if "jpg" in media or "png" in media or "gif" in media:
         container_data = {
             "access_token": user_access_token, 
             "image_url": media,
             "caption": caption
             }
-    elif filetype == "mp4":
+    # elif filetype == "mp4":
+    elif "mp4" in media:
         container_data = {
             "access_token": user_access_token, 
             "media_type": "REELS",
@@ -82,3 +84,7 @@ def instagram_post(caption, media, user_access_token):
             # failure
             check = "Failure!"
             return "Request failed with status code:", response.status_code, response.json()
+        
+if __name__ == "__main__":
+    test = instagram_post("Test", "//s3.amazonaws.com/appforest_uf/f1678073597751x317044281136753500/test.mp4", user_access_token)
+    print(test)
