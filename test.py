@@ -130,14 +130,24 @@
 # print(f"Height: {height}")
 # print(f"Aspect Ratio: {aspect_ratio:.2f}")
 
-import re
+# import re
 
-string = 'test1, 1681190985056, test2,"hello", 1681190985058, test8,"testinging againg", and again, 1681190985059'
-string = string[:-15]
+# string = 'test1, 1681190985056, test2,"hello", 1681190985058, test8,"testinging againg", and again, 1681190985059'
+# string = string[:-15]
 
-pattern = re.compile(r', 168\d{10}, ')
+# pattern = re.compile(r', 168\d{10}, ')
 
-content_list = pattern.split(string)
-content_list = [content.strip('"') for content in content_list if not content.strip().isdigit()]
+# content_list = pattern.split(string)
+# content_list = [content.strip('"') for content in content_list if not content.strip().isdigit()]
 
-print(content_list)
+# print(content_list)
+
+import datetime
+
+utc_now = datetime.datetime.utcnow()
+
+print("Current UTC time is:", utc_now)
+est_now = utc_now - datetime.timedelta(hours=4)
+print("Current EST time is:", est_now)
+pst_now = utc_now - datetime.timedelta(hours=7)
+print("Current PST time is:", pst_now)
