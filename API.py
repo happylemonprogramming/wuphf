@@ -9,6 +9,8 @@ import re
 
 # AI API
 from caption import *
+from texttoimage import *
+from removebg import *
 
 # Twitter API
 from tweet import *
@@ -136,28 +138,33 @@ def post():
   else:
     listOfPosts = len(captions)
 
-  # Loop through all posts
-  for item in range(listOfPosts): #TODO: can probably change 'item' for 'i' and then delete i = 0
-    imgurl = imgurls[i]
-    caption = captions[i]
-    print(i)
-    print(item)
-    post_time = post_times[i]
-    print('API Print Time 2:', post_time)
-    print(item, imgurl, caption, post_time)
-    # Post to social media via subprocess so customer return is immediate on Heroku and Bubble (otherwise timeouts trigger and re-post)
-    subprocess.Popen(["python", "wuphf.py", name, caption, imgurl, meta_key, twitter_token, twitter_secret, post_time, tags, tonality, influencer, str(i)])
-    i+=1
-    # Heroku Notification
-    print('There are ' + str(len(captions)) + ' captions. You just finished caption #' + str(i) + '.')
 
-    # # Break loop if there are more than 2 posts
-    # if i >= 2:
-    #   print('BREAK CODE TO STOP POSTING') #Otherwise timeouts trigger and re-post
-    #   break
+  if twitter_secret and twitter_token and meta_key != 'None':
+      output = {'Twitter': 'Null', 'Facebook': 'Null', 'Instagram': 'Null'} #TODO: add errors
+  else:
+    # Loop through all posts
+    for item in range(listOfPosts): #TODO: can probably change 'item' for 'i' and then delete i = 0
+      imgurl = imgurls[i]
+      caption = captions[i]
+      print(i)
+      print(item)
+      post_time = post_times[i]
+      print('API Print Time 2:', post_time)
+      print(item, imgurl, caption, post_time)
+      # Post to social media via subprocess so customer return is immediate on Heroku and Bubble (otherwise timeouts trigger and re-post)
+      subprocess.Popen(["python", "wuphf.py", name, caption, imgurl, meta_key, twitter_token, twitter_secret, post_time, tags, tonality, influencer, str(i)])
+      i+=1
+      # Heroku Notification
+      print('There are ' + str(len(captions)) + ' captions. You just finished caption #' + str(i) + '.')
 
-  # Response back to Bubble
-  output = {'Twitter': 'maybe', 'Facebook': 'who knows', 'Instagram': 'pherhaps', 'YouTube': 'i doubt it'} #TODO: add errors
+      # # Break loop if there are more than 2 posts
+      # if i >= 2:
+      #   print('BREAK CODE TO STOP POSTING') #Otherwise timeouts trigger and re-post
+      #   break
+
+    # Response back to Bubble
+    output = {'Twitter': 'maybe', 'Facebook': 'who knows', 'Instagram': 'pherhaps', 'YouTube': 'i doubt it'} #TODO: add errors
+    
   api_response = json.dumps(output)
 
   return api_response
@@ -263,7 +270,49 @@ def emily():
   api_response = json.dumps(dictionary)
   return api_response
 
+# __________________________________________________________________________________________________________________________________________________________
 
+# Route for AI generated image
+@app.route('/aibackgroundimage', methods=["POST"])
+def aibackgroundimage():
+  #Example JSON
+    # JSON Body = {"prompt": "create an image for this:"}
+
+  # Variable loading for JSON
+  json_data = request.get_json()
+  prompt = json_data['prompt']
+
+  # AI generated text
+  response = texttoimage(prompt)
+  
+  # Transform to dictionary format
+  dictionary = {'image_url': response[0], 'cost': response[1]}
+
+  # Transform to JSON
+  api_response = json.dumps(dictionary)
+  return api_response
+
+# __________________________________________________________________________________________________________________________________________________________
+
+# Route for AI background removal
+@app.route('/airemovebg', methods=["POST"])
+def airemovebg():
+  #Example JSON
+    # JSON Body = {"image_url": "//s3...."}
+
+  # Variable loading for JSON
+  json_data = request.get_json()
+  imgurl = json_data['image_url']
+
+  # AI generated text
+  response = removebgurl(imgurl, 'filename.jpg')
+  
+  # Transform to dictionary format
+  dictionary = {'image_url': response[0], 'cost': response[1]}
+
+  # Transform to JSON
+  api_response = json.dumps(dictionary)
+  return api_response
 
 # Run app on server (must be at end of code)
 if __name__ == '__main__':

@@ -56,20 +56,22 @@ else:
     start_time = time.time()
     print('wuphf.py is running')
     # Twitter submission
-    Twitter = tweet(caption, imgurl, twitter_token, twitter_secret)
-    twitter_time = time.time()-start_time
-    relay1 = time.time()
-    print('Twitter time: ', twitter_time)
+    if twitter_secret or twitter_token != 'None':
+        Twitter = tweet(caption, imgurl, twitter_token, twitter_secret)
+        twitter_time = time.time()-start_time
+        relay1 = time.time()
+        print('Twitter time: ', twitter_time)
     # Facebook submission
-    Facebook = facebook_post(caption, imgurl, meta_key)
-    facebook_time = time.time()-relay1
-    relay2 = time.time()
-    print('Facebook time: ', facebook_time)
-    # Instagram submission
-    Instagram = instagram_post(caption, imgurl, meta_key)
-    instagram_time = time.time()-relay2
-    relay3 = time.time()
-    print('Instagram time: ', instagram_time)
+    if meta_key != 'None':
+        Facebook = facebook_post(caption, imgurl, meta_key)
+        facebook_time = time.time()-relay1
+        relay2 = time.time()
+        print('Facebook time: ', facebook_time)
+        # Instagram submission
+        Instagram = instagram_post(caption, imgurl, meta_key)
+        instagram_time = time.time()-relay2
+        relay3 = time.time()
+        print('Instagram time: ', instagram_time)
     # # YouTube submission [NEED TO FIGURE OUT CALLBACK URI FROM CLIENT_SECRETS.JSON]
     # if imgurl.endswith('mp4'):
     #     YouTube = youtube_upload(imgurl, youtube_key, name, tonality, influencer, tags)
