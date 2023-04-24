@@ -91,7 +91,11 @@ def post():
     #               'imgurl': '//s3.amazonaws.com/appforest_uf/f1675978942446x792425085319267600/Lemon%20%26%20T-Rex.png, //s3.amazonaws.com/appforest_uf/f1675978976428x846564285372801800/Lightning%20%26%20Lemon%202.png', 
     #               'meta_key': 'abc123', 
     #               'twitter_token': 'abc-123', 
-    #               'twitter_secret': 'abc123'}
+    #               'twitter_secret': 'abc123',
+    #               'schedule': 'abc123',
+    #               'influencer': 'Dave Chappelle',
+    #               'tags': 'rocket space AI',
+    #               'tonality': 'spicy'}
 
   # Variable loading for JSON
   print("NEW POST REQUEST HAS BEEN INITIATED")
@@ -99,49 +103,50 @@ def post():
   print('JSON data:', json_data)
   name = json_data['name']
   
-  # captions = json_data['caption'].split(',  ') #TODO: fix this hacky way of splitting the captions with double spaces
-  captions = json_data['caption']
-  captions = captions[:-15] #Remove last UNIX Timestamp
-  # Split the string into a list of substrings, using UNIX Timestamp as the delimiter
-  pattern = re.compile(r', 168\d{10}, ')
-  captions = pattern.split(captions)
-  captions = [content.strip('"') for content in captions if not content.strip().isdigit()]
-
-  imgurls = json_data['imgurl'].split(', ')
-
-  # Time management
-  time_string = json_data['schedule'] #TODO: I think this needs to be split?
-  # Split the string into a list of substrings, using ", " as the delimiter
-  substrings = time_string.split(", ")
-  # Combine every two elements together in the list
-  post_times = []
-  for i in range(0, len(substrings), 2):
-      post_times.append(substrings[i] + " " + substrings[i+1])
-  print('API Print Time 1:', post_times, len(post_times))
-
-  # Key management
-  meta_key = json_data['meta_key']
-  twitter_token = json_data['twitter_token']
-  twitter_secret = json_data['twitter_secret']
-
-  tags = json_data['tags']
-  tonality = json_data['tonality']
-  influencer = json_data['influencer']
-  i=0
-
-  # Heroku Notification
-  print('API Type: ', type(post_times)) #TODO: currently used for passing the date to the subprocess
-
-  # Check if there are more captions than images
-  if len(captions) != len(imgurls):
-    listOfPosts = min(len(captions), len(imgurls))
-  else:
-    listOfPosts = len(captions)
-
-
   if twitter_secret and twitter_token and meta_key != 'None':
-      output = {'Twitter': 'Null', 'Facebook': 'Null', 'Instagram': 'Null'} #TODO: add errors
+    output = {'Twitter': 'Null', 'Facebook': 'Null', 'Instagram': 'Null'} #TODO: add errors
+  elif 'twitter_secret' and 'twitter_token' and 'meta_key' not in json_data:
+    output = {'Twitter': 'Optional', 'Facebook': 'Optional', 'Instagram': 'Optional'}
   else:
+    # captions = json_data['caption'].split(',  ') #TODO: fix this hacky way of splitting the captions with double spaces
+    captions = json_data['caption']
+    captions = captions[:-15] #Remove last UNIX Timestamp (TODO: this assumes there is one; not true on initialization)
+    # Split the string into a list of substrings, using UNIX Timestamp as the delimiter
+    pattern = re.compile(r', 168\d{10}, ')
+    captions = pattern.split(captions)
+    captions = [content.strip('"') for content in captions if not content.strip().isdigit()]
+
+    imgurls = json_data['imgurl'].split(', ')
+
+    # Time management
+    time_string = json_data['schedule'] #TODO: I think this needs to be split?
+    # Split the string into a list of substrings, using ", " as the delimiter
+    substrings = time_string.split(", ")
+    # Combine every two elements together in the list
+    post_times = []
+    for i in range(0, len(substrings), 2):
+        post_times.append(substrings[i] + " " + substrings[i+1])
+    print('API Print Time 1:', post_times, len(post_times))
+
+    # Key management
+    meta_key = json_data['meta_key']
+    twitter_token = json_data['twitter_token']
+    twitter_secret = json_data['twitter_secret']
+
+    tags = json_data['tags']
+    tonality = json_data['tonality']
+    influencer = json_data['influencer']
+    i=0
+
+    # Heroku Notification
+    print('API Type: ', type(post_times)) #TODO: currently used for passing the date to the subprocess
+
+    # Check if there are more captions than images
+    if len(captions) != len(imgurls):
+      listOfPosts = min(len(captions), len(imgurls))
+    else:
+      listOfPosts = len(captions)
+
     # Loop through all posts
     for item in range(listOfPosts): #TODO: can probably change 'item' for 'i' and then delete i = 0
       imgurl = imgurls[i]
@@ -163,8 +168,8 @@ def post():
       #   break
 
     # Response back to Bubble
-    output = {'Twitter': 'maybe', 'Facebook': 'who knows', 'Instagram': 'pherhaps', 'YouTube': 'i doubt it'} #TODO: add errors
-    
+    output = {'Twitter': 'Check', 'Facebook': 'Check', 'Instagram': 'Check'} #TODO: add errors
+      
   api_response = json.dumps(output)
 
   return api_response
