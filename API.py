@@ -129,9 +129,24 @@ def post():
     print('API Print Time 1:', post_times, len(post_times))
 
     # Key management
-    meta_key = json_data['meta_key']
-    twitter_token = json_data['twitter_token']
-    twitter_secret = json_data['twitter_secret']
+    if 'facebook_key' in json_data:
+      facebook_key = json_data['facebook_key']
+    else:
+      facebook_key = 'None'
+    if 'instagram_key' in json_data:
+      instagram_key = json_data['instagram_key']
+    else:
+      instagram_key = 'None'
+    if 'meta_key' in json_data:
+      meta_key = json_data['meta_key']
+    else:
+      meta_key = 'None'
+    if 'twitter_token' and 'twitter_secret' in json_data:
+      twitter_token = json_data['twitter_token']
+      twitter_secret = json_data['twitter_secret']
+    else:
+      twitter_token = 'None'
+      twitter_secret = 'None'
 
     tags = json_data['tags']
     tonality = json_data['tonality']
@@ -157,7 +172,7 @@ def post():
       print('API Print Time 2:', post_time)
       print(item, imgurl, caption, post_time)
       # Post to social media via subprocess so customer return is immediate on Heroku and Bubble (otherwise timeouts trigger and re-post)
-      subprocess.Popen(["python", "wuphf.py", name, caption, imgurl, meta_key, twitter_token, twitter_secret, post_time, tags, tonality, influencer, str(i)])
+      subprocess.Popen(["python", "wuphf.py", name, caption, imgurl, facebook_key, twitter_token, twitter_secret, post_time, tags, tonality, influencer, str(i), instagram_key])
       i+=1
       # Heroku Notification
       print('There are ' + str(len(captions)) + ' captions. You just finished caption #' + str(i) + '.')

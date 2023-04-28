@@ -24,9 +24,10 @@ print(imgurl)
 print(post_time)
 
 # Key Storage
-meta_key = sys.argv[4]
+facebook_key = sys.argv[4]
 twitter_token = sys.argv[5]
 twitter_secret = sys.argv[6]
+instagram_key = sys.argv[12]
 
 # TODO: For YouTube
 # tags = sys.argv[8]
@@ -62,13 +63,14 @@ else:
         relay1 = time.time()
         print('Twitter time: ', twitter_time)
     # Facebook submission
-    if meta_key != 'None':
-        Facebook = facebook_post(caption, imgurl, meta_key)
+    if facebook_key != 'None':
+        Facebook = facebook_post(caption, imgurl, facebook_key)
         facebook_time = time.time()-relay1
         relay2 = time.time()
         print('Facebook time: ', facebook_time)
+    if instagram_key != 'None':
         # Instagram submission
-        Instagram = instagram_post(caption, imgurl, meta_key)
+        Instagram = instagram_post(caption, imgurl, instagram_key)
         instagram_time = time.time()-relay2
         relay3 = time.time()
         print('Instagram time: ', instagram_time)
