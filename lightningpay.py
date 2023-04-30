@@ -55,7 +55,21 @@ def lightning_quote():
   response = requests.request("POST", url, headers=headers, data=payload)
   lninv = response.json()['lnInvoice']
   conv_rate = response.json()['conversionRate']['amount']
-  return lninv, conv_rate
+  return lninv, conv_rate, invid
+
+
+def invoice_status(invoiceId):
+
+  url = f"https://api.strike.me/v1/invoices/{invoiceId}"
+  payload={}
+  headers = {
+    'Accept': 'application/json',
+    'Authorization': f'Bearer {strikeapikey}'
+  }
+
+  response = requests.request("GET", url, headers=headers, data=payload)
+  status = response.json()['state']
+  return status
 
 
 # print(lightning_quote())

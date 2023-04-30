@@ -247,7 +247,27 @@ def lightning():
   quote = lightning_quote()
   lninv = quote[0]
   conv_rate = quote[1]
-  dictionary = {"lninv": lninv, 'btcusdrate': conv_rate}
+  invid = quote[2]
+  dictionary = {"lninv": lninv, 'btcusdrate': conv_rate, "invoiceId": invid}
+  api_response = json.dumps(dictionary)
+
+  return api_response
+
+# __________________________________________________________________________________________________________________________________________________________
+
+# Route for Lightning Invoice Status
+@app.route('/checkinvoice', methods=["POST"])
+def checkinvoice():
+  #Example JSON
+  # JSON Body = {"oauth_token": "yabbadabb", "oauth_verifier": "doooooooooooo"}
+
+  # Variable loading for JSON
+  json_data = request.get_json()
+  invoiceId = json_data['invoiceId']
+
+  # Check Invoice Status
+  status = invoice_status(invoiceId)
+  dictionary = {"status": status}
   api_response = json.dumps(dictionary)
 
   return api_response
