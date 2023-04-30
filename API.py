@@ -248,6 +248,7 @@ def lightning():
   lninv = quote[0]
   conv_rate = quote[1]
   invid = quote[2]
+  print(invid)
   dictionary = {"lninv": lninv, 'btcusdrate': conv_rate, "invoiceId": invid}
   api_response = json.dumps(dictionary)
 
