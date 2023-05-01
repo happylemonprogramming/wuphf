@@ -102,7 +102,27 @@ def post():
   json_data = request.get_json()
   print('JSON data:', json_data)
   name = json_data['name']
-  
+  # Key management
+  if 'facebook_key' in json_data:
+    facebook_key = json_data['facebook_key']
+  else:
+    facebook_key = 'None'
+  if 'instagram_key' in json_data:
+    instagram_key = json_data['instagram_key']
+  else:
+    instagram_key = 'None'
+  if 'meta_key' in json_data:
+    meta_key = json_data['meta_key']
+  else:
+    meta_key = 'None'
+  if 'twitter_token' and 'twitter_secret' in json_data:
+    twitter_token = json_data['twitter_token']
+    twitter_secret = json_data['twitter_secret']
+  else:
+    twitter_token = 'None'
+    twitter_secret = 'None'
+
+  # Key logic
   if 'twitter_secret' and 'twitter_token' and 'meta_key' not in json_data:
     output = {'Twitter': 'Optional', 'Facebook': 'Optional', 'Instagram': 'Optional'}
   elif twitter_secret and twitter_token and meta_key != 'None':
@@ -127,26 +147,6 @@ def post():
     for i in range(0, len(substrings), 2):
         post_times.append(substrings[i] + " " + substrings[i+1])
     print('API Print Time 1:', post_times, len(post_times))
-
-    # Key management
-    if 'facebook_key' in json_data:
-      facebook_key = json_data['facebook_key']
-    else:
-      facebook_key = 'None'
-    if 'instagram_key' in json_data:
-      instagram_key = json_data['instagram_key']
-    else:
-      instagram_key = 'None'
-    if 'meta_key' in json_data:
-      meta_key = json_data['meta_key']
-    else:
-      meta_key = 'None'
-    if 'twitter_token' and 'twitter_secret' in json_data:
-      twitter_token = json_data['twitter_token']
-      twitter_secret = json_data['twitter_secret']
-    else:
-      twitter_token = 'None'
-      twitter_secret = 'None'
 
     tags = json_data['tags']
     tonality = json_data['tonality']
