@@ -86,5 +86,7 @@ def instagram_post(caption, media, user_access_token):
             return "Request failed with status code:", response.status_code, response.json()
         
 if __name__ == "__main__":
-    test = instagram_post("Test", "//s3.amazonaws.com/appforest_uf/f1678073597751x317044281136753500/test.mp4", user_access_token)
+    caption = "Started a new project last week. Text the first build at 19098940201. It's free until I run out of money. #AI #opensource #python #ChatGPT"
+    videourl = 'https://db9c2d0e80dc9774067d0f439aa504a7.cdn.bubble.io/f1684127134722x917782188619789700/SMS%20AI%20Short%20-%20Made%20with%20Clipchamp%20%281%29.mp4?AWSAccessKeyId=AKIATBBF73RNGVJNFEZN&Expires=1684127529&Signature=4UerfLMJVnAnEZD7EPdJ4%2BPGK%2Fo%3D'
+    test = instagram_post(caption, videourl, user_access_token)
     print(test)

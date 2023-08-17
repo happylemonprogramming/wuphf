@@ -125,8 +125,8 @@ def post():
   # Key logic
   if 'twitter_secret' and 'twitter_token' and 'meta_key' not in json_data:
     output = {'Twitter': 'Optional', 'Facebook': 'Optional', 'Instagram': 'Optional'}
-  elif twitter_secret and twitter_token and meta_key != 'None':
-    output = {'Twitter': 'Null', 'Facebook': 'Null', 'Instagram': 'Null'} #TODO: add errors
+  # elif twitter_secret and twitter_token and meta_key != 'None':
+  #   output = {'Twitter': 'Null', 'Facebook': 'Null', 'Instagram': 'Null'} #TODO: add errors
   else:
     # captions = json_data['caption'].split(',  ') #TODO: fix this hacky way of splitting the captions with double spaces
     captions = json_data['caption']
