@@ -147,7 +147,7 @@ def post():
 
     # Initialization hack
     if time_string == 'Aug 19 2023 3:09 pm':
-      post_times.append[time_string]
+      post_times.append(time_string)
     else:
       # Combine every two elements together in the list
       for i in range(0, len(substrings), 2):
