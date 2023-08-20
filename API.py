@@ -142,11 +142,17 @@ def post():
     time_string = json_data['schedule'] #TODO: I think this needs to be split?
     # Split the string into a list of substrings, using ", " as the delimiter
     substrings = time_string.split(", ")
-    # Combine every two elements together in the list
+
     post_times = []
-    for i in range(0, len(substrings), 2):
-        post_times.append(substrings[i] + " " + substrings[i+1])
-    print('API Print Time 1:', post_times, len(post_times))
+
+    # Initialization hack
+    if time_string == 'Aug 19 2023 3:09 pm':
+      post_times.append[time_string]
+    else:
+      # Combine every two elements together in the list
+      for i in range(0, len(substrings), 2):
+          post_times.append(substrings[i] + " " + substrings[i+1])
+      print('API Print Time 1:', post_times, len(post_times))
 
     tags = json_data['tags']
     tonality = json_data['tonality']
