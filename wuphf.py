@@ -1,33 +1,40 @@
 from tweet import *
 from facebookgraphapi import *
 from instagramgraphapi import *
+from nostrpublish import *
 # from youtube import *
 import time
 import datetime
 
 # Imported arguments from API
-# User Name
-name = sys.argv[1]
+if len(sys.argv) > 1:
+    # User Name
+    name = sys.argv[1]
 
-# Post Content
-caption = sys.argv[2]
-imgurl = sys.argv[3]
-post_time = sys.argv[7]
-# Heroku Notification
-print('How the Input is Received:')
-print(sys.argv[2])
-print(sys.argv[3])
-print(sys.argv[7])
-print('How the Input is Parsed:')
-print(caption)
-print(imgurl)
-print(post_time)
+    # Post Content
+    caption = sys.argv[2]
+    imgurl = sys.argv[3]
+    post_time = sys.argv[7]
+    # Heroku Notification
+    print('How the Input is Received:')
+    print(sys.argv[2])
+    print(sys.argv[3])
+    print(sys.argv[7])
+    print('How the Input is Parsed:')
+    print(caption)
+    print(imgurl)
+    print(post_time)
 
-# Key Storage
-facebook_key = sys.argv[4]
-twitter_token = sys.argv[5]
-twitter_secret = sys.argv[6]
-instagram_key = sys.argv[12]
+    # Key Storage
+    facebook_key = sys.argv[4]
+    twitter_token = sys.argv[5]
+    twitter_secret = sys.argv[6]
+    instagram_key = sys.argv[12]
+    nostr_key = sys.argv[13] #TODO: make part of workflow
+
+else:
+    print('No arguments')
+
 
 # TODO: For YouTube
 # tags = sys.argv[8]
@@ -40,9 +47,9 @@ instagram_key = sys.argv[12]
 target_date_str = post_time
 target_date = datetime.datetime.strptime(target_date_str, "%b %d %Y %I:%M %p")
 
-# Add 8 hours to target_date to convert to UTC (Universal Time Coordinated)
+# Add hours to target_date to convert to UTC (Universal Time Coordinated)
 # target_date += datetime.timedelta(hours=7) # 8 hours for PST less 1 for DST
-target_date += datetime.timedelta(hours=4) # EST
+target_date += datetime.timedelta(hours=3) # +4 hours for EST, 3 for Texas
 
 print('Requested Media: ', imgurl)
 print('Requested Caption: ', caption)
@@ -56,24 +63,32 @@ while datetime.datetime.now() < target_date:
 else:
     start_time = time.time()
     print('wuphf.py is running')
-    # # Twitter submission
-    # if twitter_secret or twitter_token != 'None':
-    #     Twitter = tweet(caption, imgurl, twitter_token, twitter_secret)
+    # Nostr submission
+    if nostr_key != 'None':
+        kind = 1
+        Nostr = nostrpost(nostr_key,kind,caption+' '+imgurl,None,None)
+
+    # Twitter submission
+    if twitter_secret or twitter_token != 'None':
+        Twitter = tweet(caption, imgurl, twitter_token, twitter_secret)
     #     twitter_time = time.time()-start_time
     #     relay1 = time.time()
     #     print('Twitter time: ', twitter_time)
+
     # Facebook submission
     if facebook_key != 'None':
         Facebook = facebook_post(caption, imgurl, facebook_key)
         # facebook_time = time.time()-relay1
         # relay2 = time.time()
         # print('Facebook time: ', facebook_time)
+
+    # Instagram submission
     if instagram_key != 'None':
-        # Instagram submission
         Instagram = instagram_post(caption, imgurl, instagram_key)
         # instagram_time = time.time()-relay2
         # relay3 = time.time()
         # print('Instagram time: ', instagram_time)
+
     # # YouTube submission [NEED TO FIGURE OUT CALLBACK URI FROM CLIENT_SECRETS.JSON]
     # if imgurl.endswith('mp4'):
     #     YouTube = youtube_upload(imgurl, youtube_key, name, tonality, influencer, tags)
@@ -81,7 +96,6 @@ else:
     #     print('YouTube time: ', youtube_time)
     total_time = time.time()-start_time
     print('Total time: ', total_time)
-
 
 
 # # Multipost_________________________________________________________

@@ -5,6 +5,7 @@ import time
 import json
 import requests
 from requests_oauthlib import OAuth1
+import tweepy
 
 
 MEDIA_ENDPOINT_URL = 'https://upload.twitter.com/1.1/media/upload.json'
@@ -177,7 +178,7 @@ def tweet_video(caption, imgurl, twitter_token, twitter_secret):
             self.processing_info = req.json().get('processing_info', None)
             self.check_status()
 
-
+        # v1 Posting [Depracated]
         def tweet(self):
             '''
             Publishes Tweet with attached video
@@ -190,10 +191,23 @@ def tweet_video(caption, imgurl, twitter_token, twitter_secret):
             req = requests.post(url=POST_TWEET_URL, data=request_data, auth=oauth)
             # print(req.json())
 
+        # v2 Posting
+        def tweetv2(self):
+            '''
+            Publishes Tweet under new API version
+            '''
+            client = tweepy.Client(
+                consumer_key=consumer_key, consumer_secret=consumer_secret,
+                access_token=access_token, access_token_secret=access_token_secret
+            )
+            response = client.create_tweet(
+                text=caption, media_ids=[self.media_id]
+            )
+
 
     # if __name__ == '__main__':
     videoTweet = VideoTweet(imgurl)
     videoTweet.upload_init()
     videoTweet.upload_append()
     videoTweet.upload_finalize()
-    videoTweet.tweet()
+    videoTweet.tweetv2()

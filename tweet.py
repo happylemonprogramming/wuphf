@@ -5,6 +5,7 @@ from datetime import datetime
 import os
 import io
 from tweet_video import *
+from requests_oauthlib import OAuth1Session
 
 # Resources
 # Need to visit website below to implement logging in with Twitter:
@@ -26,6 +27,11 @@ client_secret = os.environ.get('twitter_client_secret')
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 # auth.set_access_token(access_token, access_token_secret)
 
+# Required for v2 endpoint for posting
+client = tweepy.Client(
+    consumer_key=consumer_key, consumer_secret=consumer_secret,
+    access_token=access_token, access_token_secret=access_token_secret
+)
 # api = tweepy.API(auth)
 
 # Function to have text completion AI create a status and image based on prompt
@@ -68,8 +74,15 @@ def tweet(status, media, access_token, access_token_secret):
         upload = api.media_upload(filename=filename, file=media_content)
 
         # Now you can use the media ID to attach the media to a tweet
-        api.update_status(status=status, media_ids=[upload.media_id])
-        message = "Success!"
+        # New v2 endpoint
+        response = client.create_tweet(
+            text=status, media_ids=[upload.media_id]
+            )
+        # Old v1 endpoint [depracated]
+        # api.update_status(status=status, media_ids=[upload.media_id])
+
+        print(response)
+        message = 'Success!'
 
     # elif filetype == "mp4":
     elif "mp4" in media:
@@ -83,7 +96,16 @@ def tweet(status, media, access_token, access_token_secret):
     return message
 
 if __name__ == "__main__":
-    test = tweet("Test Tweet", "//s3.amazonaws.com/appforest_uf/f1680459731268x674362561392616100/5-Second%20Test%20Video.mp4", access_token, access_token_secret)
+# ERROR when using v1 endpoints:
+    # tweepy.errors.Forbidden: 403 Forbidden
+    # 453 - You currently have access to a subset of Twitter API v2 endpoints and limited v1.1 endpoints (e.g. media post, oauth) only. 
+    # If you need access to this endpoint, you may need a different access level. 
+    # You can learn more here: https://developer.twitter.com/en/portal/product
+
+    # mediaurl = 'https://media.discordapp.net/attachments/939751705732599818/1142667378858147950/image.png'
+    # mediaurl = 'https://db9c2d0e80dc9774067d0f439aa504a7.cdn.bubble.io/f1692569384484x236287001954928580/supermeme_23h30_18.gif'
+    mediaurl = '//s3.amazonaws.com/appforest_uf/f1680459731268x674362561392616100/5-Second%20Test%20Video.mp4'
+    test = tweet("Test Tweet", mediaurl, access_token, access_token_secret)
     print(test)
 
 # _________________________________________________________________________________________

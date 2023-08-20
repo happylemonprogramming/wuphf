@@ -22,17 +22,19 @@ def facebook_post(caption, media, user_access_token):
     response = requests.get(page_access_url, params=page_access_data)
     page_access_token=response.json()['access_token']
 
-    # Identify File Type
-    filetype = str(media[-3:])
-    print(filetype)
+    # Identify File Type #TODO: remove with new extension identification
+    # filetype = str(media[-3:])
+    # print(filetype)
+
     # # Check for https
     if 'https:' in media or 'http:' in media:
         media_url = media
     else:
         media_url = 'https:' + media
     print(media_url)
+
     # Image Post
-    if filetype == 'jpg' or filetype == 'png' or filetype == 'gif':
+    if "jpg" in media_url or "png" in media_url or "gif" in media_url:
         print("IMAGE POST")
         post_url = f"https://graph.facebook.com/{page_id}/photos"
         post_data = {"message": caption, "url": media_url, "access_token": page_access_token}
@@ -43,8 +45,8 @@ def facebook_post(caption, media, user_access_token):
     # https://developers.facebook.com/docs/video-api/guides/publishing/
 
     # Reel Post [EVENTUALLY SUCCESSFUL ON RETURN, BUT CAN'T FIND REELS POSTS ON PAGE]
-    elif filetype == 'mp4':
-
+    # Image Post
+    elif "mp4" in media_url:
         # # Reels
         # # Initialize Upload
         # init_url = f"https://graph.facebook.com/v16.0/{page_id}/video_reels"
