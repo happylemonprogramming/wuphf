@@ -8,6 +8,7 @@ import datetime
 
 # Imported arguments from API
 if len(sys.argv) > 1:
+    print(sys.argv, len(sys.argv))
     # User Name
     name = sys.argv[1]
 
