@@ -121,6 +121,10 @@ def post():
   else:
     twitter_token = 'None'
     twitter_secret = 'None'
+  if 'nostr_key' in json_data:
+    nostr_key = json_data['nostr_key']
+  else:
+    nostr_key = 'None'
 
   # Key logic
   if 'twitter_secret' and 'twitter_token' and 'meta_key' not in json_data:
@@ -178,7 +182,7 @@ def post():
       print('API Print Time 2:', post_time)
       print(item, imgurl, caption, post_time)
       # Post to social media via subprocess so customer return is immediate on Heroku and Bubble (otherwise timeouts trigger and re-post)
-      subprocess.Popen(["python", "wuphf.py", name, caption, imgurl, facebook_key, twitter_token, twitter_secret, post_time, tags, tonality, influencer, str(i), instagram_key])
+      subprocess.Popen(["python", "wuphf.py", name, caption, imgurl, facebook_key, twitter_token, twitter_secret, post_time, tags, tonality, influencer, str(i), instagram_key, nostr_key])
       i+=1
       # Heroku Notification
       print('There are ' + str(len(captions)) + ' captions. You just finished caption #' + str(i) + '.')
