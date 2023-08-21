@@ -69,7 +69,7 @@ else:
     if nostr_key != 'None':
         print('Nostr Post Processing')
         kind = 1
-        Nostr = nostrpost(nostr_key,kind,caption+' '+imgurl,None,None)
+        Nostr = nostrpost(nostr_key,kind,caption,imgurl,None,None)
         print('Nostr Completed')
 
     # Twitter submission

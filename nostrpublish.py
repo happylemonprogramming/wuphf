@@ -9,12 +9,12 @@ relay_manager = RelayManager(timeout=6)
 relay_manager.add_relay("wss://nostr-pub.wellorder.net")
 relay_manager.add_relay("wss://relay.damus.io")
 
-def nostrpost(private_key,kind,content,input,input_type):
+def nostrpost(private_key,kind,status,imgurl,input,input_type):
     # # Check for https
-    if 'https:' in content.lower() or 'http:' in content.lower():
-        content = content
+    if 'https:' in imgurl.lower() or 'http:' in imgurl.lower():
+        imgurl = imgurl
     else:
-        content = 'https:' + content
+        imgurl = 'https:' + imgurl
     if type(private_key) is str and 'nsec' in private_key:
         # nsec to hex conversion
         private_object = PrivateKey.from_nsec(private_key)
@@ -25,7 +25,7 @@ def nostrpost(private_key,kind,content,input,input_type):
     # Simple Note
     event = Event(
                 kind = kind, 
-                content = content
+                content = status+' '+imgurl
                 )
     
     # Speech to Text Event
@@ -69,8 +69,9 @@ def nostrpost(private_key,kind,content,input,input_type):
 
 if __name__ == '__main__':
     kind = 1
-    content = 'This is the way https://i.giphy.com/media/d2W7eZX5z62ziqdi/200.gif'
+    status = 'This is the way'
+    imgurl = 'https://i.giphy.com/media/d2W7eZX5z62ziqdi/200.gif'
     # private_key = PrivateKey()
     # print(private_key.bech32())
     private_key = 'nsec153vkyspeahug9ezchh7f008ckkspfl67c9l6msc37nxmvds5pwlsnzxdl4'
-    nostrpost(private_key,kind,content,None,None)
+    nostrpost(private_key,kind,status,imgurl,None,None)
