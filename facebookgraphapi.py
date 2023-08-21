@@ -34,7 +34,7 @@ def facebook_post(caption, media, user_access_token):
     print(media_url)
 
     # Image Post
-    if "jpg" in media_url or "png" in media_url or "gif" in media_url:
+    if "jpg" in media_url.lower() or "png" in media_url.lower() or "gif" in media_url.lower():
         print("IMAGE POST")
         post_url = f"https://graph.facebook.com/{page_id}/photos"
         post_data = {"message": caption, "url": media_url, "access_token": page_access_token}
@@ -46,7 +46,7 @@ def facebook_post(caption, media, user_access_token):
 
     # Reel Post [EVENTUALLY SUCCESSFUL ON RETURN, BUT CAN'T FIND REELS POSTS ON PAGE]
     # Image Post
-    elif "mp4" in media_url:
+    elif "mp4" in media_url.lower():
         # # Reels
         # # Initialize Upload
         # init_url = f"https://graph.facebook.com/v16.0/{page_id}/video_reels"

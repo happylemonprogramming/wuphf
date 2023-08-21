@@ -36,14 +36,14 @@ def instagram_post(caption, media, user_access_token):
     # filetype = str(media[-3:])
 
     # if filetype == "jpg" or filetype == "png" or filetype == "gif":
-    if "jpg" in media or "png" in media or "gif" in media:
+    if "jpg" in media.lower() or "png" in media.lower() or "gif" in media.lower():
         container_data = {
             "access_token": user_access_token, 
             "image_url": media,
             "caption": caption
             }
     # elif filetype == "mp4":
-    elif "mp4" in media:
+    elif "mp4" in media.lower():
         container_data = {
             "access_token": user_access_token, 
             "media_type": "REELS",

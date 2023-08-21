@@ -65,7 +65,7 @@ else:
     start_time = time.time()
     print('wuphf.py is running')
     # Nostr submission
-    if nostr_key != 'None':
+    if nostr_key != 'None':     
         kind = 1
         Nostr = nostrpost(nostr_key,kind,caption+' '+imgurl,None,None)
 

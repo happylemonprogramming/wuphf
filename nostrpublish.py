@@ -10,6 +10,11 @@ relay_manager.add_relay("wss://nostr-pub.wellorder.net")
 relay_manager.add_relay("wss://relay.damus.io")
 
 def nostrpost(private_key,kind,content,input,input_type):
+    # # Check for https
+    if 'https:' in content.lower() or 'http:' in content.lower():
+        content = content
+    else:
+        content = 'https:' + content
     if type(private_key) is str and 'nsec' in private_key:
         # nsec to hex conversion
         private_object = PrivateKey.from_nsec(private_key)

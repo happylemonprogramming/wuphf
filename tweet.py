@@ -42,7 +42,7 @@ def tweet(status, media, access_token, access_token_secret):
 
 
     # # Check for https
-    if 'https:' in media or 'http:' in media:
+    if 'https:' in media.lower() or 'http:' in media.lower():
         url = media
     else:
         url = 'https:' + media
@@ -58,7 +58,8 @@ def tweet(status, media, access_token, access_token_secret):
     # # Upload media to twitter
     # if filetype == "jpg" or filetype == "png" or filetype == "gif": #only allows 30 second video
 
-    if "jpg" in media or "png" in media or "gif" in media:
+    # Image file
+    if "jpg" in media.lower() or "png" in media.lower() or "gif" in media.lower():
     #     api.update_status_with_media(status, filename) #This method is deprecated
         # mediaIDcreator = api.media_upload(filename)
         # api.update_status(status, media_ids=[mediaIDcreator.media_id_string])
@@ -84,15 +85,18 @@ def tweet(status, media, access_token, access_token_secret):
         print(response)
         message = 'Success!'
 
-    # elif filetype == "mp4":
-    elif "mp4" in media:
+    # Video file
+    elif "mp4" in media.lower():
         # mediaIDcreator = api.chuncked_upload_init(total_bytes=os.path.getsize(filename), media_type='video/mp4', media_category='tweet_video')
         tweet_video(status, media, access_token, access_token_secret)
         print('Tweet Video Completed')
         message = "Success!"
 
+    # Text only
     else:
-        message = "Wrong File Upload Type!"
+        # New v2 endpoint
+        response = client.create_tweet(text=status)
+        message = "Success!"
     return message
 
 if __name__ == "__main__":

@@ -37,7 +37,7 @@ def tweet_video(caption, imgurl, twitter_token, twitter_secret):
             Defines video tweet properties
             '''
             # # Check for https
-            if 'https:' in file_name or 'http:' in file_name:
+            if 'https:' in file_name.lower() or 'http:' in file_name.lower():
                 self.video_url = file_name
             else:
                 self.video_url = "https:" + file_name
