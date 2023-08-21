@@ -32,6 +32,7 @@ if len(sys.argv) > 1:
     twitter_secret = sys.argv[6]
     instagram_key = sys.argv[12]
     nostr_key = sys.argv[13] #TODO: make part of workflow
+    print(nostr_key)
 
 else:
     print('No arguments')
@@ -65,27 +66,35 @@ else:
     start_time = time.time()
     print('wuphf.py is running')
     # Nostr submission
-    if nostr_key != 'None':     
+    if nostr_key != 'None':
+        print('Nostr Post Processing')
         kind = 1
         Nostr = nostrpost(nostr_key,kind,caption+' '+imgurl,None,None)
+        print('Nostr Completed')
 
     # Twitter submission
     if twitter_secret or twitter_token != 'None':
+        print('Twitter Post Processing')
         Twitter = tweet(caption, imgurl, twitter_token, twitter_secret)
+        print('Twitter Completed')
     #     twitter_time = time.time()-start_time
     #     relay1 = time.time()
     #     print('Twitter time: ', twitter_time)
 
     # Facebook submission
     if facebook_key != 'None':
+        print('Facebook Post Processing')
         Facebook = facebook_post(caption, imgurl, facebook_key)
+        print('Facebook Completed')
         # facebook_time = time.time()-relay1
         # relay2 = time.time()
         # print('Facebook time: ', facebook_time)
 
     # Instagram submission
     if instagram_key != 'None':
+        print('Instagram Post Processing')
         Instagram = instagram_post(caption, imgurl, instagram_key)
+        print('Instagram Completed')
         # instagram_time = time.time()-relay2
         # relay3 = time.time()
         # print('Instagram time: ', instagram_time)
