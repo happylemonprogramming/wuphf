@@ -79,7 +79,7 @@ else:
         print('Nostr Post Error')
     # Twitter submission
     try:
-        if twitter_secret or twitter_token != 'None':
+        if twitter_secret != 'None' or twitter_token != 'None':
             print('Twitter Post Processing')
             Twitter = tweet(caption, imgurl, twitter_token, twitter_secret)
             print('Twitter Completed')
@@ -109,7 +109,7 @@ else:
     #     YouTube = youtube_upload(imgurl, youtube_key, name, tonality, influencer, tags)
     #     youtube_time = time.time()-relay3
     #     print('YouTube time: ', youtube_time)
-    
+
     total_time = time.time()-start_time
     print('Total time: ', total_time)
 
