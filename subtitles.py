@@ -51,16 +51,32 @@ from moviepy.video.compositing.CompositeVideoClip import CompositeVideoClip
 # # Write the result to a new video file
 # result.write_videofile("result_file.mp4")
 
+# # Local file solution
+# import subprocess
+
+# input_video = 'video.mp4'
+# subtitle_file = 'test.srt'
+
+# def add_subtitle(input_video, subtitle_file):
+#     ffmpeg_cmd = ['ffmpeg', '-i', f'{input_video}', '-vf', f'subtitles={subtitle_file}', '-c:v', 'libx264', '-preset', 'fast', '-crf', '18', '-c:a', 'copy', '-y', 'captioned.mp4']
+
+#     subprocess.run(ffmpeg_cmd)
+
+# # Test
+# if __name__ == '__main__':
+#     add_subtitle(input_video, subtitle_file)
+
+# URL Solution
 import subprocess
 
-input_video = 'video.mp4'
+input_source = 'https://s3.amazonaws.com/appforest_uf/f1678940868271x564994871606250500/aistorytelling.py%20-%20Untitled%20%28Workspace%29%20-%20Visual%20Studio%20Code%202023-01-02%2011-12-25.mp4'
+# input_source = 'https://example.com/video.mp4'  # Replace with the actual video URL
 subtitle_file = 'test.srt'
 
-def add_subtitle(input_video, subtitle_file):
-    ffmpeg_cmd = ['ffmpeg', '-i', f'{input_video}', '-vf', f'subtitles={subtitle_file}', '-c:v', 'libx264', '-preset', 'fast', '-crf', '18', '-c:a', 'copy', '-y', 'captioned.mp4']
-
+def add_subtitle(input_source, subtitle_file):
+    ffmpeg_cmd = ['ffmpeg', '-i', input_source, '-vf', f'subtitles={subtitle_file}', '-c:v', 'libx264', '-preset', 'fast', '-crf', '18', '-c:a', 'copy', '-y', 'captioned.mp4']
     subprocess.run(ffmpeg_cmd)
 
 # Test
 if __name__ == '__main__':
-    add_subtitle(input_video, subtitle_file)
+    add_subtitle(input_source, subtitle_file)

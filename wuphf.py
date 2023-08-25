@@ -32,7 +32,10 @@ if len(sys.argv) > 1:
     twitter_secret = sys.argv[6]
     instagram_key = sys.argv[12]
     nostr_key = sys.argv[13] #TODO: make part of workflow
-    print(nostr_key)
+    print('Nostr Key: ', nostr_key)
+    print('Twitter Keys: ', twitter_secret, twitter_token)
+    print('Facebook Key: ', facebook_key)
+    print('Instagram Key: ', instagram_key)
 
 else:
     print('No arguments')
@@ -66,44 +69,47 @@ else:
     start_time = time.time()
     print('wuphf.py is running')
     # Nostr submission
-    if nostr_key != 'None':
-        print('Nostr Post Processing')
-        kind = 1
-        Nostr = nostrpost(nostr_key,kind,caption,imgurl,None,None)
-        print('Nostr Completed')
-
+    try:
+        if nostr_key != 'None':
+            print('Nostr Post Processing')
+            kind = 1
+            Nostr = nostrpost(nostr_key,kind,caption,imgurl,None,None)
+            print('Nostr Completed')
+    except:
+        print('Nostr Post Error')
     # Twitter submission
-    if twitter_secret or twitter_token != 'None':
-        print('Twitter Post Processing')
-        Twitter = tweet(caption, imgurl, twitter_token, twitter_secret)
-        print('Twitter Completed')
-    #     twitter_time = time.time()-start_time
-    #     relay1 = time.time()
-    #     print('Twitter time: ', twitter_time)
+    try:
+        if twitter_secret or twitter_token != 'None':
+            print('Twitter Post Processing')
+            Twitter = tweet(caption, imgurl, twitter_token, twitter_secret)
+            print('Twitter Completed')
+    except:
+        print('Twitter Post Error')
 
     # Facebook submission
-    if facebook_key != 'None':
-        print('Facebook Post Processing')
-        Facebook = facebook_post(caption, imgurl, facebook_key)
-        print('Facebook Completed')
-        # facebook_time = time.time()-relay1
-        # relay2 = time.time()
-        # print('Facebook time: ', facebook_time)
+    try:
+        if facebook_key != 'None':
+            print('Facebook Post Processing')
+            Facebook = facebook_post(caption, imgurl, facebook_key)
+            print('Facebook Completed')
+    except:
+        print('Facebook Post Error')
 
     # Instagram submission
-    if instagram_key != 'None':
-        print('Instagram Post Processing')
-        Instagram = instagram_post(caption, imgurl, instagram_key)
-        print('Instagram Completed')
-        # instagram_time = time.time()-relay2
-        # relay3 = time.time()
-        # print('Instagram time: ', instagram_time)
+    try:
+        if instagram_key != 'None':
+            print('Instagram Post Processing')
+            Instagram = instagram_post(caption, imgurl, instagram_key)
+            print('Instagram Completed')
+    except:
+        print('Instagram Post Error')
 
     # # YouTube submission [NEED TO FIGURE OUT CALLBACK URI FROM CLIENT_SECRETS.JSON]
     # if imgurl.endswith('mp4'):
     #     YouTube = youtube_upload(imgurl, youtube_key, name, tonality, influencer, tags)
     #     youtube_time = time.time()-relay3
     #     print('YouTube time: ', youtube_time)
+    
     total_time = time.time()-start_time
     print('Total time: ', total_time)
 

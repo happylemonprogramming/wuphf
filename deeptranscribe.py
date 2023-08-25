@@ -50,7 +50,8 @@ def getDeepgramTranscription(p_url):
     output = response.json()
     return output
 
-p_url = 'https://s3.amazonaws.com/appforest_uf/f1678940868271x564994871606250500/aistorytelling.py%20-%20Untitled%20%28Workspace%29%20-%20Visual%20Studio%20Code%202023-01-02%2011-12-25.mp4'
+p_url = 'https://db9c2d0e80dc9774067d0f439aa504a7.cdn.bubble.io/f1692677290753x434684319755118660/RPReplay_Final1692675241.MP4'
+# p_url = 'https://s3.amazonaws.com/appforest_uf/f1678940868271x564994871606250500/aistorytelling.py%20-%20Untitled%20%28Workspace%29%20-%20Visual%20Studio%20Code%202023-01-02%2011-12-25.mp4'
 output = getDeepgramTranscription(p_url)
 
 def convert_to_srt(data, output_filename):
@@ -69,6 +70,10 @@ def convert_to_srt(data, output_filename):
             f.write(f"{i}\n")
             f.write(f"{start_time} --> {end_time}\n")
             f.write(f"{subtitle_text}\n\n")
+    with open('test.txt', 'w') as f:
+        for i, entry in enumerate(data, start=1):
+            subtitle_text = entry['punctuated_word']
+            f.write(f"{subtitle_text} ")
 
 import os
 subtitle_data = output['results']['channels'][0]['alternatives'][0]['words']
@@ -76,7 +81,7 @@ subtitle_data = output['results']['channels'][0]['alternatives'][0]['words']
 # Extract the filename from the URL
 filename = os.path.basename(p_url)
 name, extension = os.path.splitext(filename)
-output_filename = name + ".srt"
+output_filename = 'test' + ".srt"
 
 # write a subtitle (.srt) file with word-level timestamps
 convert_to_srt(subtitle_data,output_filename)
