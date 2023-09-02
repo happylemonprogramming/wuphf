@@ -66,21 +66,48 @@ def youtube_description(tonality,influencer,tags):
     return AI_response, cost
 
 
-def emily_function(prompt):
-    response = openai.Completion.create(
-        model="text-davinci-003",
-        prompt=prompt,
-        temperature=0.9,
-        max_tokens=150,
-        top_p=1,
-        frequency_penalty=0.0,
-        presence_penalty=0.6,
-        stop=[" Human:", " AI:"]
-    )
+# def emily_function(prompt):
+#     response = openai.Completion.create(
+#         model="text-davinci-003",
+#         prompt=prompt,
+#         temperature=0.9,
+#         max_tokens=150,
+#         top_p=1,
+#         frequency_penalty=0.0,
+#         presence_penalty=0.6,
+#         stop=[" Human:", " AI:"]
+#     )
 
-    AI_response = response['choices'][0]['text']
-    cost = 0.02*(int(response['usage']['total_tokens']))/1000
+#     AI_response = response['choices'][0]['text']
+#     cost = 0.02*(int(response['usage']['total_tokens']))/1000
+#     return AI_response, cost
+
+def emily_function(prompt):
+    try:
+        # AI integration
+        output = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "system", "content": "You are a social media manager."},
+                # TODO consider allowing user to create their own prompt as a function
+                # The prompt can be anything: a therapist, doctor, mechanic, friend, teacher, etc...
+            {"role": "user", "content": prompt}
+                # TODO consider recursive calls to the assistant that allows the assistant to have context
+            ]
+        )
+        AI_response = output['choices'][0]['message']['content']
+    except:
+        AI_response = 'Try again later, AI server overloaded :('
+
+    # Total AI cost
+    cost = float(0.002 * int(output['usage']['total_tokens'])/1000)
     return AI_response, cost
 
 if __name__ == '__main__':
-    print(caption('funny','Kevin Hart', 'bananas, chocolate, mint')[0])
+    # print(caption('funny','Kevin Hart', 'bananas, chocolate, mint')[0])
+    tags = ['berry-picking', 'farming','fresh','farm-to-table']
+    tonality = 'inspring'
+    influencer = 'Erin Benzakein'
+    prompt = f'Using the tags: {tags}, create a {tonality} post in tweet format in the voice of {influencer} without referencing {influencer}.'
+    output = emily_function(prompt)
+    print(output[0])
