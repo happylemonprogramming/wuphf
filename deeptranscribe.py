@@ -48,7 +48,11 @@ def extract_sentences_from_srt(srt):
     text = ' '.join(words)
     return text
 
-def convert_to_srt(data, output_filename='subtitle.srt'):
+def convert_to_srt(data, path, level='sentence'):
+    print('Data input type: ', type(data))
+    word_level = data['words']
+    sentence_level = data['paragraphs']['paragraphs']
+
     def format_time(seconds):
         # Convert seconds to hours, minutes, seconds, milliseconds format
         hours, remainder = divmod(seconds, 3600)
@@ -56,18 +60,51 @@ def convert_to_srt(data, output_filename='subtitle.srt'):
         seconds, milliseconds = divmod(remainder, 1)
         return f"{int(hours):02d}:{int(minutes):02d}:{int(seconds):02d},{int(milliseconds*1000):03d}"
 
-    with open(output_filename, 'w') as f:
-        for i, entry in enumerate(data, start=1):
-            start_time = format_time(entry['start'])
-            end_time = format_time(entry['end'])
-            subtitle_text = entry['punctuated_word']
-            f.write(f"{i}\n")
-            f.write(f"{start_time} --> {end_time}\n")
-            f.write(f"{subtitle_text}\n\n")
-    # with open('test.txt', 'w') as f:
-    #     for i, entry in enumerate(data, start=1):
-    #         subtitle_text = entry['punctuated_word']
-    #         f.write(f"{subtitle_text} ")
+    if level == 'word':
+        # Word-Level
+        data = word_level
+        output_filename = path + 'word_level.srt'
+        with open(output_filename, 'w') as f:
+            for i, entry in enumerate(data, start=1):
+                start_time = format_time(entry['start'])
+                end_time = format_time(entry['end'])
+                subtitle_text = entry['punctuated_word']
+                f.write(f"{i}\n")
+                f.write(f"{start_time} --> {end_time}\n")
+                f.write(f"{subtitle_text}\n\n")
+
+    elif level == 'sentence':
+        # Sentence-Level
+        output_filename = path + 'sentence_level.srt'
+
+        # intialize lists
+        sentences = []
+        texts = []
+        starts = []
+        ends = []
+        i = 0
+
+        # gather all paragraphs into unified list
+        for paragraph in sentence_level:
+            sentences.append(paragraph['sentences'])
+
+        # create text list, start list and end list
+        for sentence in sentences:
+            for text in sentence:
+                # TODO: Add sentence subtitles
+                texts.append(text['text'])
+                starts.append(text['start'])
+                ends.append(text['end'])
+
+        with open(output_filename, 'w') as f:
+            for i, entry in enumerate(texts, start=1):
+                start_time = format_time(starts[i-1])
+                end_time = format_time(ends[i-1])
+                subtitle_text = texts[i-1]
+                f.write(f"{i}\n")
+                f.write(f"{start_time} --> {end_time}\n")
+                f.write(f"{subtitle_text}\n\n")
+            
     return output_filename
 
 # async def DeepgramWait(file):

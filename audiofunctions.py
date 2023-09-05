@@ -32,6 +32,7 @@ def overlay_audio(file1, file2, output_path):
     audio2 = AudioSegment.from_file(file2)
     combined = audio1.overlay(audio2)
     combined.export(output_path, format="wav")
+    return output_path
 
 
 # Reduce volume __________________________________________________________________________
@@ -43,7 +44,7 @@ def reduceaudiovolume(input_file, output_file, volume):
 
     # Reduce the volume by X% (adjust as needed)
     reduced_volume_audio = audio + (audio.dBFS * volume)
-    print(reduced_volume_audio)
+    # print(reduced_volume_audio)
     # Export the adjusted audio
     reduced_volume_audio.export(output_file, format="wav")
 
@@ -95,17 +96,41 @@ def audiocombine(path1,path2):
     concatenated_clip.write_audiofile(output)
     return output
 
-def add_new_audio(input_video, new_audio, subtitles=None, output_video='output.mp4'):
-    ffmpeg_cmd = [
-        'ffmpeg',
-        '-i', input_video,
-        '-i', new_audio,
-        # '-vf', f'subtitles={subtitles}',
-        '-c:v', 'libx264', '-preset', 'fast', '-crf', '18',
-        '-c:a', 'aac', '-b:a', '192k',  # You can adjust the audio codec and bitrate as needed
-        '-map', '0:v', '-map', '1:a',
-        '-y', output_video
-    ]
+def add_new_audio(input_video, new_audio=None, subtitles=None, output_video='output.mp4'):
+    if subtitles == None and new_audio != None:
+        ffmpeg_cmd = [
+            'ffmpeg',
+            '-i', input_video,
+            '-i', new_audio,
+            # '-vf', f'subtitles={subtitles}',
+            '-c:v', 'libx264', '-preset', 'fast', '-crf', '18',
+            '-c:a', 'aac', '-b:a', '192k',  # You can adjust the audio codec and bitrate as needed
+            '-map', '0:v', '-map', '1:a',
+            '-y', output_video
+        ]
+    elif new_audio == None and subtitles != None:
+        ffmpeg_cmd = [
+            'ffmpeg',
+            '-i', input_video,
+            # '-i', new_audio,
+            '-vf', f'subtitles={subtitles}',
+            '-c:v', 'libx264', '-preset', 'fast', '-crf', '18',
+            '-c:a', 'aac', '-b:a', '192k',  # You can adjust the audio codec and bitrate as needed
+            # '-map', '0:v', '-map', '1:a',
+            '-y', output_video
+        ]
+
+    else:
+        ffmpeg_cmd = [
+            'ffmpeg',
+            '-i', input_video,
+            '-i', new_audio,
+            '-vf', f'subtitles={subtitles}',
+            '-c:v', 'libx264', '-preset', 'fast', '-crf', '18',
+            '-c:a', 'aac', '-b:a', '192k',  # You can adjust the audio codec and bitrate as needed
+            '-map', '0:v', '-map', '1:a',
+            '-y', output_video
+        ]
     subprocess.run(ffmpeg_cmd)
 
 # def audioblocks(subtitles):
